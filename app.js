@@ -19,7 +19,7 @@ searchUser.addEventListener('keyup', (e) => {
     chemical2.search(userText)
     .then(data => {
       ui.showNutrition(data.response);
-      ui.showBrands(data.response);
+      //ui.showBrands(data.response);
     })
   }
 })

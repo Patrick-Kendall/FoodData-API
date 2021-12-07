@@ -4,6 +4,7 @@ class UI {
     this.profile2 = document.getElementById("profile2");
     this.nutrientDat = "";
     this.relatedBrands = "";
+    this.majorData = "";
     this.test = new nutrientData;
   }
 
@@ -24,6 +25,8 @@ class UI {
 
     console.log(this.test);
 
+    this.majorData = this.genMajor(this.test.major);
+
 
     // printing literal string to an html div
     this.profile.innerHTML = `
@@ -37,9 +40,9 @@ class UI {
           
           <table id="entry">
           <tr>
-             <th colspan= "3">Nutrient Data: </th>
+             <th colspan= "3">Nutrient Data Per 100g: </th>
           </tr>
-          ${this.nutrientDat}
+          ${this.majorData}
           
         </div>
     `;
@@ -99,5 +102,23 @@ class UI {
       return result
     }
 
-    generate
+    genMajor(data) {
+      let result = ``;
+
+      for(const [nutrientName,nutrient] of Object.entries(data)) {
+        if (!nutrient.units) {
+
+        } else {
+          result += `
+          <tr>
+            <td> ${nutrientName}: ${nutrient.weight} ${nutrient.units} </td>
+          </tr>
+        `
+        }
+      }
+      result += `</table>`
+
+      return result
+
+    }
 }

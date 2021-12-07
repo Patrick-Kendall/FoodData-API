@@ -1,6 +1,7 @@
 // class to sort nutrient data and concatenate into desired format
-class nutrientElement  {
+class nutrientElement extends Object {
     constructor() {
+        super();
         this.weight = 0;
         this.units = "";
     }
@@ -11,6 +12,7 @@ class nutrientElement  {
     }
 }
 
+// structure to organize food nutrient data
 class nutrientData {
     constructor() {
 
@@ -56,11 +58,15 @@ class nutrientData {
         }
 
         // miscellaneous
-        this.addedSugar = new nutrientElement();
-        this.cholesterol = new nutrientElement();
-        this.caffeine = new nutrientElement();
-        this.theobromine = new nutrientElement();
-        this.retinol = new nutrientElement();
+        this.misc = {
+            'addedSugar' : new nutrientElement(),
+            'cholesterol' : new nutrientElement(),
+            'caffeine' : new nutrientElement(),
+            'theobromine' : new nutrientElement(),
+            'retinol' : new nutrientElement(),
+            'alcohol' : new nutrientElement()
+        }
+
         this.energy = new nutrientElement();
 
 
@@ -98,8 +104,6 @@ class nutrientData {
             'maltose' : new nutrientElement()
         }
 
-        // toxins
-        this.alcohol = new nutrientElement();
 
 
     }
@@ -117,7 +121,6 @@ class nutrientData {
             // Protein 
             case 1003:
                 this.major.protein.fill(nutrient.value,nutrient.unitName);
-                //console.log(this.protein);
                 break;
             // Lipid 
             case 1004:
@@ -134,16 +137,13 @@ class nutrientData {
 
             // Ethyl Alcohol
             case 1018:
-                this.alcohol.fill(nutrient.value,nutrient.unitName);
+                this.misc.alcohol.fill(nutrient.value,nutrient.unitName);
                 break;
 
 
             // Vitamin A
             case 1104:
-
                 this.vitamins.vitA.fill(nutrient.value,nutrient.unitName);
-
-
                 break;
             // Niacin (B3)
             case 1167:
