@@ -1,0 +1,11 @@
+.spec-sheet-container {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 2fr 3fr;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.spec-sheet-text {
+  padding-left: 30px;
+}
