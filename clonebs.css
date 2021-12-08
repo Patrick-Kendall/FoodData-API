@@ -1,5 +1,5 @@
 body {
-    font-size: 1em;
+    font-size: 0.97em;
     padding: 0px;
     margin: 20px;
     background-color: rgb(37, 37, 33);
@@ -42,7 +42,7 @@ a {
 
 }
 
-.brandTable {
+.relatedList {
     text-transform: capitalize;
     font-size: 1em;
 }

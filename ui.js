@@ -1,7 +1,7 @@
 class UI {
   constructor() {
-    this.profile = document.getElementById("profile");
-    this.profile2 = document.getElementById("profile2");
+    this.nutrient_tab = document.getElementById("nutrient-tab");
+    this.related = document.getElementById("related");
     this.nutrientDat = "";
     this.relatedBrands = "";
     this.majorData = "";
@@ -19,30 +19,25 @@ class UI {
     this.brandName = this.foodOne.brandName;
     this.ingredients = this.foodOne.ingredients;
     
-    // clearing synonym list
-    this.synonyms = "";
 
-    this.nutrientDat = this.generateTable(this.foodOne.foodNutrients);
-
+    // load nutrient profile for first returned food match: foods[0]
     this.nutrients.loadAll(this.foodOne.foodNutrients);
-
     this.nutrients.calcTotalWeight(this.nutrients);
-
     this.nutrients.formatUnits();
+
 
     console.log(this.nutrients);
 
+    // process nutrient profile and display in html <tr> groupings
     this.majorData = this.genHTML_tr(this.nutrients.major);
-
     this.mineralData = this.genHTML_tr(this.nutrients.minerals);
-
     this.vitaminData = this.genDecodeHTML_tr(this.nutrients.vitamins);
 
 
 
 
-    // printing literal string to an html div
-    this.profile.innerHTML = `
+    // printing to an html div with id="nutrient-tab"
+    this.nutrient_tab.innerHTML = `
           <div class="nutrient-container">
 
           <h4 class="nutrient-header"> ${this.foodOne.description} : 100g Serving<br>
@@ -93,8 +88,9 @@ class UI {
 
     this.relatedBrands = this.genHTML_li(searchResponse.foods);
     
-    this.profile2.innerHTML = `
-    <div class = "brandTable">
+    // printing to htlm div : related
+    this.related.innerHTML = `
+    <div class = "relatedList">
     <h4> Related Searches </h4>
     <ul id="similar">
       <a href="#">${this.relatedBrands}</a>
@@ -102,8 +98,8 @@ class UI {
     </div>
     `
 
+    // enabling link to new, related searches
     let sim = document.getElementById("similar");
-
     sim.addEventListener('click',(e) => 
     {
       const search = e.target.innerHTML;
@@ -113,6 +109,9 @@ class UI {
       api.searchSurvey(search)
       .then(data =>
         {
+          // change user input text to similar search term
+          let targ = document.getElementById("searchUser");
+          targ.value = data.response.foods[0].description;
           this.clear();
           this.showNutrition(data.response);
           this.showBrands(data.response);
@@ -164,6 +163,7 @@ class UI {
       return result
     }
 
+    // function used for related searchs
     genHTML_li(data) {
       let result = ``;
 
