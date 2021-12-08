@@ -16,10 +16,11 @@ searchUser.addEventListener('keyup', (e) => {
   // check if input is empty
   if(userText !== '') {
     // get selected properties: IUPAC Name, Title, MW, Mol. Formula
-    chemical2.search(userText)
+    chemical2.searchSurvey(userText)
     .then(data => {
+      ui.clear();
       ui.showNutrition(data.response);
-      //ui.showBrands(data.response);
+      ui.showBrands(data.response);
     })
   }
 })

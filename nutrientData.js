@@ -16,15 +16,14 @@ class nutrientElement extends Object {
 class nutrientData {
     constructor() {
 
-        //total weight of nutrients
+        // total weight of nutrients
         this.totalWeight = 0;
 
         // major nutrients
         this.major = {
             'protein' : new nutrientElement(),
             'fat' : new nutrientElement(),
-            'carb' : new nutrientElement(),
-            'fiber' : new nutrientElement()
+            'carb' : new nutrientElement()
         }
 
         // minerals
@@ -42,16 +41,16 @@ class nutrientData {
 
         // vitamins
         this.vitamins = {
-            'vitA' : new nutrientElement(),
-            'vitB6' : new nutrientElement(),
-            'vitB12' : new nutrientElement(),
-            'vitC' : new nutrientElement(),
-            'vitD' : new nutrientElement(),
-            'vitE' : new nutrientElement(),
-            'vitK' : new nutrientElement(),
+            'vitamin_A' : new nutrientElement(),
+            'vitamin_B6' : new nutrientElement(),
+            'vitamin_B12' : new nutrientElement(),
+            'vitamin_C' : new nutrientElement(),
+            'vitamin_D' : new nutrientElement(),
+            'vitamin_E' : new nutrientElement(),
+            'vitamin_K' : new nutrientElement(),
             'caroteneA' : new nutrientElement(),
             'caroteneB' : new nutrientElement(),
-            'folicAcid' : new nutrientElement(),
+            'folic_acid' : new nutrientElement(),
             'niacin' : new nutrientElement(),
             'thiamin' : new nutrientElement(),
             'riboflavin' : new nutrientElement()
@@ -64,7 +63,8 @@ class nutrientData {
             'caffeine' : new nutrientElement(),
             'theobromine' : new nutrientElement(),
             'retinol' : new nutrientElement(),
-            'alcohol' : new nutrientElement()
+            'alcohol' : new nutrientElement(),
+            'fiber' : new nutrientElement()
         }
 
         this.energy = new nutrientElement();
@@ -108,6 +108,7 @@ class nutrientData {
 
     }
     
+    // calls "sortMessage()" on each nutrient
     loadAll(nutrients) {
         nutrients.forEach(nutrient =>
             {
@@ -115,6 +116,7 @@ class nutrientData {
             })
     }
 
+    // sorts each nutrient according to provided nutrientId
     sortMessage(nutrient) {
         let nutrientId = nutrient.nutrientId;
         switch (nutrientId) {
@@ -132,7 +134,7 @@ class nutrientData {
                 break;    
             // Fiber
             case 1079:
-                this.major.fiber.fill(nutrient.value,nutrient.unitName);
+                this.misc.fiber.fill(nutrient.value,nutrient.unitName);
                 break;
 
             // Ethyl Alcohol
@@ -142,8 +144,8 @@ class nutrientData {
 
 
             // Vitamin A
-            case 1104:
-                this.vitamins.vitA.fill(nutrient.value,nutrient.unitName);
+            case 1106:
+                this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName);
                 break;
             // Niacin (B3)
             case 1167:
@@ -151,7 +153,7 @@ class nutrientData {
                 break;
             // Thiamin (B1)
             case 1165:
-                this.vitaminsthiamin.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.thiamin.fill(nutrient.value,nutrient.unitName);
                 break;
             // Riboflavin
             case 1166:
@@ -159,31 +161,31 @@ class nutrientData {
                 break;
             // Vitamin B6
             case 1175:
-                this.vitamins.vitB6.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_B6.fill(nutrient.value,nutrient.unitName);
                 break;
             // Vitamin B12
             case 1178:
-                this.vitamins.vitB12.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_B12.fill(nutrient.value,nutrient.unitName);
                 break; 
             // Vitamin Folate (B)
             case 1177:
-                this.vitamins.folicAcid.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.folic_acid.fill(nutrient.value,nutrient.unitName);
                 break;
             // Vitamin C
             case 1162:
-                this.vitamins.vitC.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_C.fill(nutrient.value,nutrient.unitName);
                 break;    
             // Vitamin D
             case 1114:
-                this.vitamins.vitD.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_D.fill(nutrient.value,nutrient.unitName);
                 break;
             // Vitamin K
             case 1185:
-                this.vitamins.vitK.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_K.fill(nutrient.value,nutrient.unitName);
                 break; 
             // Vitamin E
             case 1242:
-                this.vitamins.vitE.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_E.fill(nutrient.value,nutrient.unitName);
                 break;
 
 
@@ -225,11 +227,11 @@ class nutrientData {
                 break;
             // Vitamin K
             case 1185:
-                this.vitamins.vitK.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_K.fill(nutrient.value,nutrient.unitName);
                 break; 
             // Vitamin E
             case 1242:
-                this.vitamins.vitE.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_E.fill(nutrient.value,nutrient.unitName);
                 break;
 
 
@@ -308,23 +310,23 @@ class nutrientData {
 
             // Vitamin Folate (B)
             case 1177:
-                this.folicAcid.fill(nutrient.value,nutrient.unitName);
+                this.folic_acid.fill(nutrient.value,nutrient.unitName);
                 break;
             // Vitamin C
             case 1162:
-                this.vitC.fill(nutrient.value,nutrient.unitName);
+                this.vitamin_C.fill(nutrient.value,nutrient.unitName);
                 break;    
             // Vitamin D
             case 1114:
-                this.vitD.fill(nutrient.value,nutrient.unitName);
+                this.vitamin_D.fill(nutrient.value,nutrient.unitName);
                 break;
             // Vitamin K
             case 1185:
-                this.vitK.fill(nutrient.value,nutrient.unitName);
+                this.vitamin_K.fill(nutrient.value,nutrient.unitName);
                 break; 
             // Vitamin E
             case 1242:
-                this.vitE.fill(nutrient.value,nutrient.unitName);
+                this.vitamin_E.fill(nutrient.value,nutrient.unitName);
                 break;
             // Energy
             case 1008:
@@ -336,50 +338,198 @@ class nutrientData {
     }
 
     clear() {
+        //total weight of nutrients
+        this.totalWeight = 0;
+
         // major nutrients
-        this.protein = "";
-        this.fat = "";
-        this.carb = "";
-        this.energy = "";
-        this.sugars = "";
-        this.fiber = "";
+        this.major = {
+            'protein' : new nutrientElement(),
+            'fat' : new nutrientElement(),
+            'carb' : new nutrientElement()
+        }
 
         // minerals
-        this.calcium = "";
-        this.iron = "";
-        this.magnesium = "";
-        this.phosphorous = "";
-        this.zinc = "";
-        this.copper = "";
-        this.selenium = "";
-        this.potassium ="";
-        this.sodium = "";
-        this.addedSugar = "";
-        this.cholesterol = "";
-        this.transFat = "";
-        this.satFat = "";
-        this.caffeine = "";
-        this.theobromine = "";
-        this.retinol = "";
+        this.minerals = {
+            'calcium' : new nutrientElement(),
+            'iron' : new nutrientElement(),
+            'magnesium' : new nutrientElement(),
+            'phosphorous' : new nutrientElement(),
+            'zinc' : new nutrientElement(),
+            'copper' : new nutrientElement(),
+            'potassium' : new nutrientElement(),
+            'sodium' : new nutrientElement(),
+            'selenium' : new nutrientElement(),
+        }
 
         // vitamins
-        this.vitA = "";
-        this.vitB6 = "";
-        this.vitB12 = "";
-        this.vitC = "";
-        this.vitD = "";
-        this.vitE = "";
-        this.vitK = "";
-        this.caroteneA = "";
-        this.caroteneB = "";
-        this.folicAcid = "";
-        this.niacin = "";
-        this.thiamin = "";
-        this.riboflavin = "";
+        this.vitamins = {
+            'vitamin_A' : new nutrientElement(),
+            'vitamin_B6' : new nutrientElement(),
+            'vitamin_B12' : new nutrientElement(),
+            'vitamin_C' : new nutrientElement(),
+            'vitamin_D' : new nutrientElement(),
+            'vitamin_E' : new nutrientElement(),
+            'vitamin_K' : new nutrientElement(),
+            'caroteneA' : new nutrientElement(),
+            'caroteneB' : new nutrientElement(),
+            'folic_acid' : new nutrientElement(),
+            'niacin' : new nutrientElement(),
+            'thiamin' : new nutrientElement(),
+            'riboflavin' : new nutrientElement()
+        }
 
-        // toxins
-        this.alcohol = "";
+        // miscellaneous
+        this.misc = {
+            'addedSugar' : new nutrientElement(),
+            'cholesterol' : new nutrientElement(),
+            'caffeine' : new nutrientElement(),
+            'theobromine' : new nutrientElement(),
+            'retinol' : new nutrientElement(),
+            'alcohol' : new nutrientElement(),
+            'fiber' : new nutrientElement()
+        }
 
+        this.energy = new nutrientElement();
+
+
+        // fats
+        this.fats = {
+            'sat' : {
+                'total' : new nutrientElement(),
+                '_0_4' : new nutrientElement(),
+                '_0_6' : new nutrientElement(),
+                '_0_10' : new nutrientElement(),
+                '_0_16' : new nutrientElement(),
+                '_0_18' : new nutrientElement(),
+                '_0_20' : new nutrientElement()
+            },
+    
+            'monoUnsat' : {
+                'total' : new nutrientElement(),
+                '_1_18' : new nutrientElement(),
+                '_1_20' : new nutrientElement()
+            },
+    
+            'polyUnsat' : {
+                'total' : new nutrientElement(),
+                '_3_18' : new nutrientElement(),
+                '_4_20' : new nutrientElement() 
+            }
+        }
+
+
+        // sugars
+        this.sugars = {
+            'total' : new nutrientElement(),
+            'sucrose' : new nutrientElement(),
+            'glucose' : new nutrientElement(),
+            'maltose' : new nutrientElement()
+        }
+
+    }
+
+    calcTotalWeight(data) {
+        for (const [key,value] of Object.entries(this.major)) {
+            this.totalWeight += value.weight;
+        }
+
+        for (const [key,value] of Object.entries(this.minerals)) {
+            switch (value.units) {
+                case 'G' :
+                    this.totalWeight += value.weight;
+                    break;
+                case 'MG':
+                    this.totalWeight += value.weight/1000;
+                    break;
+                case 'UG':
+                    this.totalWeight += value.weight/1000000
+                    break;
+                default :
+                    break;
+            }
+        }
+
+        for (const [key,value] of Object.entries(this.vitamins)) {
+            switch (value.units) {
+                case 'G' :
+                    this.totalWeight += value.weight;
+                    break;
+                case 'MG':
+                    this.totalWeight += value.weight/1000;
+                    break;
+                case 'UG':
+                    this.totalWeight += value.weight/1000000
+                    break;
+                default :
+                    break;
+            }
+        }
+
+        console.log(this.totalWeight);
+    }
+
+    formatUnits() {
+        for(const [nutrientName,nutrient] of Object.entries(this.vitamins)) {
+            if (!nutrient.units) {
+    
+            } else {
+              switch (nutrient.units) {
+                    case 'G':
+                        nutrient.units = nutrient.units.toLowerCase();
+                        break;
+                    case 'MG':
+                        nutrient.units = nutrient.units.toLowerCase();
+                        break;
+                    case 'UG':
+                        nutrient.units = "\u00B5g" ;
+                        break;
+                    default:
+                        break;
+              }
+            }
+        }
+        for(const [nutrientName,nutrient] of Object.entries(this.minerals)) {
+            if (!nutrient.units) {
+    
+            } else {
+              switch (nutrient.units) {
+                    case 'G':
+                        nutrient.units = nutrient.units.toLowerCase();
+                        break;
+                    case 'MG':
+                        nutrient.units = nutrient.units.toLowerCase();
+                        break;
+                    case 'UG':
+                        nutrient.units = "\u00B5g" ;
+                        break;
+                    default:
+                        break;
+              }
+            }
+          
+
+        }
+        for(const [nutrientName,nutrient] of Object.entries(this.major)) {
+            if (!nutrient.units) {
+    
+            } else {
+              switch (nutrient.units) {
+                    case 'G':
+                        nutrient.units = nutrient.units.toLowerCase();
+                        break;
+                    case 'MG':
+                        nutrient.units = nutrient.units.toLowerCase();
+                        break;
+                    case 'UG':
+                        nutrient.units = "\u00B5g" ;
+                        break;
+                    default:
+                        break;
+              }
+            }
+          
+
+        }
     }
 
     concatValueUnits(nutrient) {

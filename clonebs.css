@@ -1,0 +1,89 @@
+body {
+    font-size: 1em;
+    padding: 0px;
+    margin: 20px;
+    background-color: rgb(37, 37, 33);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h3 {
+    color: blanchedalmond;
+    font-size: 1.6em;
+}
+
+h4 {
+    color:rgb(177, 175, 175);
+    font-size: 1.2em;
+}
+
+a {
+    color: blanchedalmond;
+    text-decoration: none;
+}
+
+.navbar {
+    text-align: left;
+}
+
+.navbar-brand {
+    color: blanchedalmond;
+    text-decoration: none;
+}
+
+.body {
+    padding: 40px;
+    padding-top:20px;
+}
+
+.container {
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.brandTable {
+    text-transform: capitalize;
+    font-size: 1em;
+}
+
+.nutrient-value-units {
+    text-align: right;
+}
+
+#profile {
+    margin-top: 60px;
+}
+
+#searchUser {
+    background-color: rgb(37,37,37);
+    border-style: groove;
+
+}
+
+#entry2, #entry {
+    width:100%;
+}
+
+.form-control {
+    width: 400px;
+    color:blanchedalmond;
+    padding:6px;
+    font-size: 1.2em;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nutrient-total-line {
+    height: 1px;
+}
+
+th {
+    text-align: left;
+}
+
+#similar {
+    cursor:pointer;
+    color: blanchedalmond;
+    text-decoration: none;
+}
+

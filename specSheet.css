@@ -9,3 +9,34 @@
 .spec-sheet-text {
   padding-left: 30px;
 }
+
+.nutrient-table {
+  border-collapse: collapse;
+}
+
+.nutrient-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: left;
+}
+
+.nutrient-col {
+  background-color: rgb(24, 20, 20);
+  border: 1px black solid;
+  color:blanchedalmond;
+  padding: 10px;
+  margin: 1px;
+  width:160px;
+  height: 300px;
+}
+
+.nutrient-frame {
+  width:20px;
+  background-color: rgb(24, 20, 20);
+  border: 1px black solid;
+  color:blanchedalmond;
+  padding: 10px;
+  margin: 1px;
+  height: 300px;
+}
