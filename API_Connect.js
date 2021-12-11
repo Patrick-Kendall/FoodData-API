@@ -5,9 +5,8 @@ class FoodData {
 
   }
 
-  //calling URL with fetch; fetching title, charge, etc..
+  //calling URL with fetch; using "Branded" endpoint to fetch ingredients and limited nutrient data
   async search(chemical) {
-    //chemical = chemical.split(" ").join("+");
 
     const chemicalResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${chemical}&dataType=Branded`, {
       method:'GET',
@@ -27,8 +26,8 @@ class FoodData {
     }
   }
 
+  // search API without a dataType filter
   async searchAll(chemical) {
-    //chemical = chemical.split(" ").join("+");
 
     const chemicalResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${chemical}`, {
       method:'GET',
@@ -48,8 +47,8 @@ class FoodData {
     }
   }
 
+  // use "Survey" endpoint to get complete food nutrition based on average not brand
   async searchSurvey(chemical) {
-    //chemical = chemical.split(" ").join("+");
 
     const chemicalResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${chemical}&dataType=Survey (FNDDS)`, {
       method:'GET',

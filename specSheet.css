@@ -19,6 +19,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-content: left;
+  column-gap: 10px;
 }
 
 .nutrient-col {
@@ -29,14 +30,18 @@
   margin: 1px;
   width:160px;
   height: 300px;
+  box-shadow: 1px 2px 2px black;
 }
 
 .nutrient-frame {
-  width:20px;
-  background-color: rgb(24, 20, 20);
-  border: 1px black solid;
+  width:auto;
   color:blanchedalmond;
+  background-color: rgb(24, 20, 20);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid black;
   padding: 10px;
   margin: 1px;
   height: 300px;
+  cursor: pointer;
+  box-shadow: 1px 2px 2px black;
 }

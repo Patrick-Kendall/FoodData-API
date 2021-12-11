@@ -1,5 +1,5 @@
 body {
-    font-size: 0.97em;
+    font-size: 0.95em;
     padding: 0px;
     margin: 20px;
     background-color: rgb(37, 37, 33);
@@ -13,7 +13,7 @@ h3 {
 
 h4 {
     color:rgb(177, 175, 175);
-    font-size: 1.2em;
+    font-size: 1.3em;
 }
 
 a {
@@ -71,14 +71,16 @@ a {
     padding:6px;
     font-size: 1.2em;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 0.5px solid rgb(177, 175, 175);
+    border-radius: 3px;
+    box-shadow: rgb(17, 17, 175);
 }
 
-.nutrient-total-line {
-    height: 1px;
-}
+
 
 th {
     text-align: left;
+    font-size: 1.1em;
 }
 
 #similar {
@@ -87,3 +89,19 @@ th {
     text-decoration: none;
 }
 
+.table-caption {
+    color: blanchedalmond;
+}
+
+.invisible {
+    display: none;
+}
+
+.extended {
+    margin-top: 10px;
+}
+
+.plus {
+    margin-top: 130px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

@@ -5,4 +5,8 @@ class Profile3 {
         this.description = {}
 
     }
+
+    loadAll(data) {
+        
+    }
 }

@@ -1,4 +1,4 @@
-// class to sort nutrient data and concatenate into desired format
+// class to manage endpoint of the "nutrientData" structure
 class nutrientElement extends Object {
     constructor() {
         super();
@@ -6,6 +6,7 @@ class nutrientElement extends Object {
         this.units = "";
     }
 
+    // populate data
     fill(weight,units) {
         this.weight = parseInt(weight);
         this.units = units;
@@ -73,35 +74,47 @@ class nutrientData {
         // fats
         this.fats = {
             'sat' : {
-                'total' : new nutrientElement(),
-                '_0_4' : new nutrientElement(),
-                '_0_6' : new nutrientElement(),
-                '_0_10' : new nutrientElement(),
-                '_0_16' : new nutrientElement(),
-                '_0_18' : new nutrientElement(),
-                '_0_20' : new nutrientElement()
+                'SFA_4x0' : new nutrientElement(),
+                'SFA_6x0' : new nutrientElement(),
+                'SFA_10x0' : new nutrientElement(),
+                'SFA_12x0' : new nutrientElement(),
+                'SFA_14x0' : new nutrientElement(),
+                'SFA_16x0' : new nutrientElement(),
+                'SFA_18x0' : new nutrientElement(),
+                'SFA_20x0' : new nutrientElement(),
             },
     
             'monoUnsat' : {
-                'total' : new nutrientElement(),
-                '_1_18' : new nutrientElement(),
-                '_1_20' : new nutrientElement()
+                'MUFA_16x1' : new nutrientElement(),
+                'MUFA_18x1' : new nutrientElement(),
+                'MUFA_20x1' : new nutrientElement(),
+                'MUFA_22x1' : new nutrientElement(),
             },
     
             'polyUnsat' : {
-                'total' : new nutrientElement(),
-                '_3_18' : new nutrientElement(),
-                '_4_20' : new nutrientElement() 
+                'PUFA_18x2' : new nutrientElement(),
+                'PUFA_18x3' : new nutrientElement(),
+                'PUFA_18x4' : new nutrientElement(),
+                'PUFA_20x4' : new nutrientElement(),
+                'PUFA_22x5' : new nutrientElement(),
+                'PUFA_22x6' : new nutrientElement(),
+                'PUFA_2x5' : new nutrientElement(),
+            },
+
+            'fatTotals' : {
+                'saturated_Fat' : new nutrientElement(),
+                'mono_unsaturated_Fat' : new nutrientElement(),
+                'poly_unsaturated_Fat' : new nutrientElement()
             }
         }
 
 
         // sugars
         this.sugars = {
-            'total' : new nutrientElement(),
             'sucrose' : new nutrientElement(),
             'glucose' : new nutrientElement(),
-            'maltose' : new nutrientElement()
+            'maltose' : new nutrientElement(),
+            'total' : new nutrientElement()
         }
 
 
@@ -254,57 +267,117 @@ class nutrientData {
                 break;    
 
 
-
+            // SFA Total
+            case 1258:
+                this.fats.fatTotals.saturated_Fat.fill(nutrient.value,nutrient.unitName);
+                break;
+            
             // SFA 4:0
             case 1259:
-                this.fats.sat._0_4.fill(nutrient.value,nutrient.unitName);
+                this.fats.sat.SFA_4x0.fill(nutrient.value,nutrient.unitName);
                 break;
+
             // SFA 6:0
             case 1260:
-                this.fats.sat._0_6.fill(nutrient.value,nutrient.unitName);
+                this.fats.sat.SFA_6x0.fill(nutrient.value,nutrient.unitName);
                 break; 
+
             // SFA 10:0
             case 1262:
-                this.fats.sat._0_10.fill(nutrient.value,nutrient.unitName);
+                this.fats.sat.SFA_10x0.fill(nutrient.value,nutrient.unitName);
+                break;
+
+            // SFA 12:0
+            case 1263:
+                this.fats.sat.SFA_12x0.fill(nutrient.value,nutrient.unitName);
+                break; 
+
+            // SFA 14:0
+            case 1264:
+                this.fats.sat.SFA_14x0.fill(nutrient.value,nutrient.unitName);
                 break;
 
             // SFA 16:0
             case 1265:
-                this.fats.sat._0_16.fill(nutrient.value,nutrient.unitName);
+                this.fats.sat.SFA_16x0.fill(nutrient.value,nutrient.unitName);
                 break;
 
             // SFA 18:0
             case 1266:
-                this.fats.sat._0_18.fill(nutrient.value,nutrient.unitName);
+                this.fats.sat.SFA_18x0.fill(nutrient.value,nutrient.unitName);
                 break;
 
             // SFA 20:0
             case 1267:
-                this.fats.sat._0_20.fill(nutrient.value,nutrient.unitName);
+                this.fats.sat.SFA_20x0.fill(nutrient.value,nutrient.unitName);
                 break;
 
 
+            // MUFA Total
+            case 1292:
+                this.fats.fatTotals.mono_unsaturated_Fat.fill(nutrient.value,nutrient.unitName)
+                break;
+
+            // MUFA 16:1
+            case 1275:
+                this.fats.monoUnsat.MUFA_16x1.fill(nutrient.value,nutrient.unitName);
+                break;
+
             // MUFA 18:1
             case 1268:
-                this.fats.monoUnsat._1_18.fill(nutrient.value,nutrient.unitName);
+                this.fats.monoUnsat.MUFA_18x1.fill(nutrient.value,nutrient.unitName);
                 break;
 
             // MUFA 20:1
             case 1277:
-                this.fats.monoUnsat._1_20.fill(nutrient.value,nutrient.unitName);
+                this.fats.monoUnsat.MUFA_20x1.fill(nutrient.value,nutrient.unitName);
+                break;
+                
+            // MUFA 22:1
+            case 1279:
+                this.fats.monoUnsat.MUFA_22x1.fill(nutrient.value,nutrient.unitName);
                 break;
 
-                
+
+            // PUFA Total
+            case 1293:
+                this.fats.fatTotals.poly_unsaturated_Fat.fill(nutrient.value,nutrient.unitName);
+                break;
+            
+            // PUFA 18:2
+            case 1269:
+                this.fats.polyUnsat.PUFA_18x2.fill(nutrient.value,nutrient.unitName);
+                break;
+
             // PUFA 18:3
             case 1270:
-                this.fats.polyUnsat._3_18.fill(nutrient.value,nutrient.unitName);
+                this.fats.polyUnsat.PUFA_18x3.fill(nutrient.value,nutrient.unitName);
+                break;
+             
+            // PUFA 18:4
+            case 1276:
+                this.fats.polyUnsat.PUFA_18x4.fill(nutrient.value,nutrient.unitName);
                 break;
 
             // PUFA 20:4
             case 1271:
-                this.fats.polyUnsat._4_20.fill(nutrient.value,nutrient.unitName);
-                break; 
+                this.fats.polyUnsat.PUFA_20x4.fill(nutrient.value,nutrient.unitName);
+                break;
 
+            // PUFA 22:5
+            case 1280:
+                this.fats.polyUnsat.PUFA_22x5.fill(nutrient.value,nutrient.unitName);
+                break;
+
+            // PUFA 22:6
+            case 1271:
+                this.fats.polyUnsat.PUFA_22x6.fill(nutrient.value,nutrient.unitName);
+                break;
+
+            // PUFA 2:5
+            case 1278:
+                this.fats.polyUnsat.PUFA_2x5.fill(nutrient.value,nutrient.unitName);
+                break; 
 
 
 
@@ -337,8 +410,10 @@ class nutrientData {
 
     }
 
+    // clear the nutrient profile
     clear() {
-        //total weight of nutrients
+ 
+        // total weight of nutrients
         this.totalWeight = 0;
 
         // major nutrients
@@ -395,39 +470,52 @@ class nutrientData {
         // fats
         this.fats = {
             'sat' : {
-                'total' : new nutrientElement(),
-                '_0_4' : new nutrientElement(),
-                '_0_6' : new nutrientElement(),
-                '_0_10' : new nutrientElement(),
-                '_0_16' : new nutrientElement(),
-                '_0_18' : new nutrientElement(),
-                '_0_20' : new nutrientElement()
+                'SFA_4x0' : new nutrientElement(),
+                'SFA_6x0' : new nutrientElement(),
+                'SFA_10x0' : new nutrientElement(),
+                'SFA_12x0' : new nutrientElement(),
+                'SFA_14x0' : new nutrientElement(),
+                'SFA_16x0' : new nutrientElement(),
+                'SFA_18x0' : new nutrientElement(),
+                'SFA_20x0' : new nutrientElement(),
             },
     
             'monoUnsat' : {
-                'total' : new nutrientElement(),
-                '_1_18' : new nutrientElement(),
-                '_1_20' : new nutrientElement()
+                'MUFA_16x1' : new nutrientElement(),
+                'MUFA_18x1' : new nutrientElement(),
+                'MUFA_20x1' : new nutrientElement(),
+                'MUFA_22x1' : new nutrientElement(),
             },
     
             'polyUnsat' : {
-                'total' : new nutrientElement(),
-                '_3_18' : new nutrientElement(),
-                '_4_20' : new nutrientElement() 
+                'PUFA_18x2' : new nutrientElement(),
+                'PUFA_18x3' : new nutrientElement(),
+                'PUFA_18x4' : new nutrientElement(),
+                'PUFA_20x4' : new nutrientElement(),
+                'PUFA_22x5' : new nutrientElement(),
+                'PUFA_22x6' : new nutrientElement(),
+                'PUFA_2x5' : new nutrientElement(),
+            },
+
+            'fatTotals' : {
+                'saturated_Fat' : new nutrientElement(),
+                'mono_unsaturated_Fat' : new nutrientElement(),
+                'poly_unsaturated_Fat' : new nutrientElement()
             }
         }
 
 
         // sugars
         this.sugars = {
-            'total' : new nutrientElement(),
             'sucrose' : new nutrientElement(),
             'glucose' : new nutrientElement(),
-            'maltose' : new nutrientElement()
+            'maltose' : new nutrientElement(),
+            'total' : new nutrientElement()
         }
 
     }
 
+    // calculate weight of nutrients while avoiding duplicate nutrient entries, i.e. total fat versus individual fats
     calcTotalWeight(data) {
         for (const [key,value] of Object.entries(this.major)) {
             this.totalWeight += value.weight;
@@ -468,8 +556,9 @@ class nutrientData {
         console.log(this.totalWeight);
     }
 
-    formatUnits() {
-        for(const [nutrientName,nutrient] of Object.entries(this.vitamins)) {
+    // convert unit text from capital to lowercase and substitute in micro gram symbol
+    formatUnits(data) {
+        for(const [nutrientName,nutrient] of Object.entries(data)) {
             if (!nutrient.units) {
     
             } else {
@@ -487,51 +576,10 @@ class nutrientData {
                         break;
               }
             }
-        }
-        for(const [nutrientName,nutrient] of Object.entries(this.minerals)) {
-            if (!nutrient.units) {
-    
-            } else {
-              switch (nutrient.units) {
-                    case 'G':
-                        nutrient.units = nutrient.units.toLowerCase();
-                        break;
-                    case 'MG':
-                        nutrient.units = nutrient.units.toLowerCase();
-                        break;
-                    case 'UG':
-                        nutrient.units = "\u00B5g" ;
-                        break;
-                    default:
-                        break;
-              }
-            }
-          
-
-        }
-        for(const [nutrientName,nutrient] of Object.entries(this.major)) {
-            if (!nutrient.units) {
-    
-            } else {
-              switch (nutrient.units) {
-                    case 'G':
-                        nutrient.units = nutrient.units.toLowerCase();
-                        break;
-                    case 'MG':
-                        nutrient.units = nutrient.units.toLowerCase();
-                        break;
-                    case 'UG':
-                        nutrient.units = "\u00B5g" ;
-                        break;
-                    default:
-                        break;
-              }
-            }
-          
-
         }
     }
 
+    // unused method
     concatValueUnits(nutrient) {
         let result = nutrient.weight + ": " + nutrient.units;
 
