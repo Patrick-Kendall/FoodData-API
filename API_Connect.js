@@ -6,9 +6,9 @@ class FoodData {
   }
 
   //calling URL with fetch; using "Branded" endpoint to fetch ingredients and limited nutrient data
-  async search(chemical) {
+  async search(food) {
 
-    const chemicalResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${chemical}&dataType=Branded`, {
+    const foodResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${food}&dataType=Branded`, {
       method:'GET',
       headers: {
         'Accept':'application/json',
@@ -16,9 +16,7 @@ class FoodData {
       }
     });
 
-    const response = await chemicalResponse.json();
-
-    console.log(response);
+    const response = await foodResponse.json();
 
     // return response from website in JSON format
     return {
@@ -27,9 +25,9 @@ class FoodData {
   }
 
   // search API without a dataType filter
-  async searchAll(chemical) {
+  async searchAll(food) {
 
-    const chemicalResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${chemical}`, {
+    const foodResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${food}`, {
       method:'GET',
       headers: {
         'Accept':'application/json',
@@ -37,9 +35,7 @@ class FoodData {
       }
     });
 
-    const response = await chemicalResponse.json();
-
-    console.log(response);
+    const response = await foodResponse.json();
 
     // return response from website in JSON format
     return {
@@ -48,9 +44,9 @@ class FoodData {
   }
 
   // use "Survey" endpoint to get complete food nutrition based on average not brand
-  async searchSurvey(chemical) {
+  async searchSurvey(food) {
 
-    const chemicalResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${chemical}&dataType=Survey (FNDDS)`, {
+    const foodResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${food}&dataType=Survey (FNDDS)`, {
       method:'GET',
       headers: {
         'Accept':'application/json',
@@ -58,7 +54,7 @@ class FoodData {
       }
     });
 
-    const response = await chemicalResponse.json();
+    const response = await foodResponse.json();
 
     console.log(response);
 

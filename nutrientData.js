@@ -40,6 +40,7 @@ class nutrientData {
             'selenium' : new nutrientElement(),
         }
 
+
         // vitamins
         this.vitamins = {
             'vitamin_A' : new nutrientElement(),
@@ -579,11 +580,4 @@ class nutrientData {
         }
     }
 
-    // unused method
-    concatValueUnits(nutrient) {
-        let result = nutrient.weight + ": " + nutrient.units;
-
-        return result
-        
-    }
 }

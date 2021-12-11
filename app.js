@@ -1,9 +1,9 @@
 // entry point
 
-// instance of object with methods to fetch from PubChem
+// instance of object with methods to fetch from DOA database
 const chemical2 = new FoodData;
 
-// instance of UI which prints html to div with id = "profile"
+// instance of UI which prints html to two divs in index.html
 const ui = new UI;
 
 // getting user input from webpage
@@ -15,7 +15,7 @@ searchUser.addEventListener('keyup', (e) => {
 
   // check if input is empty
   if(userText !== '') {
-    // get selected properties: IUPAC Name, Title, MW, Mol. Formula
+    // 
     chemical2.searchSurvey(userText)
     .then(data => {
       ui.clear();

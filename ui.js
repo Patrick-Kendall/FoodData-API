@@ -39,12 +39,6 @@ class UI {
     // convert units to SI unit standards
     this.formatUnits();
 
-
-
-
-
-    console.log(this.nutrients);
-
     // process nutrient profile and display in html <tr> groupings
     this.majorData = this.genHTML_tr(this.nutrients.major);
     this.mineralData = this.genHTML_tr(this.nutrients.minerals);
@@ -143,7 +137,7 @@ class UI {
     })
   }
 
-  // 
+  // printing to an html div with id ""
   showBrands(searchResponse) {
     this.relatedBrands = this.genHTML_li(searchResponse.foods);
     
