@@ -1,5 +1,5 @@
 class UI {
-  constructor() {
+  constructor(appState) {
     this.nutrient_tab = document.getElementById("nutrient-tab");
     this.related = document.getElementById("related");
     this.nutrientDat = "";
@@ -11,6 +11,7 @@ class UI {
     this.fatBreakdown2 = "";
     this.nutrients = new nutrientData;
     //this.accessToApi = new FoodData;
+    this.appState = appState;
   }
 
   formatUnits() {
@@ -138,7 +139,7 @@ class UI {
   }
 
   // printing to an html div with id ""
-  showBrands(searchResponse) {
+  showRelatedSearches(searchResponse) {
     this.relatedBrands = this.genHTML_li(searchResponse.foods);
     
     // printing to htlm div : related
@@ -155,29 +156,49 @@ class UI {
     let sim = document.getElementById("similar");
     sim.addEventListener('click',(e) => 
     {
-      const search = e.target.innerHTML;
+      const userText = e.target.innerHTML;
       const api = new FoodData;
+      const searchType = this.appState.getState();
 
 
+      switch(searchType) {
+        case 0:
+          api.searchSurvey(userText)
+          .then(data =>
+            {
+              // change user input text to similar search term
+              let targ = document.getElementById("searchUser");
+              targ.value = data.response.foods[0].description;
+    
+              //update UI
+              this.clear();
+              this.showNutrition(data.response);
+              this.showBrands(data.response);
+            })
+          break;
+        case 1:
+          api.search(userText)
+          .then(data =>
+            {
+              // change user input text to similar search term
+              let targ = document.getElementById("searchUser");
+              targ.value = data.response.foods[0].description;
+    
+              //update UI
+              this.clear();
+              this.showNutrition(data.response);
+              this.showBrands(data.response);
+            })
+          break;
+      }
       // calling api which returns 50 food entries by default
-      api.searchSurvey(search)
-      .then(data =>
-        {
-          // change user input text to similar search term
-          let targ = document.getElementById("searchUser");
-          targ.value = data.response.foods[0].description;
 
-          //update UI
-          this.clear();
-          this.showNutrition(data.response);
-          this.showBrands(data.response);
-        })
     })
   }
 
   // call clear function on nutrient data structure
   clear() {
-    this.nutrients.clear()
+    this.nutrients.clear();
   }
 
     // generate table from inputted array of strings; heading must be included external to this function
@@ -242,6 +263,8 @@ class UI {
 
       for(const [nutrientName,nutrient] of Object.entries(data)) {
         if (!nutrient.units) {
+
+        } else if (nutrient.weight < 0.01) {
 
         } else {
           result += `

@@ -1,10 +1,12 @@
 // entry point
 
 // instance of object with methods to fetch from DOA database
-const chemical2 = new FoodData;
+const api = new FoodData;
+
+const state = new State;
 
 // instance of UI which prints html to two divs in index.html
-const ui = new UI;
+const ui = new UI(state);
 
 // getting user input from webpage
 const searchUser = document.getElementById('searchUser');
@@ -13,14 +15,37 @@ searchUser.addEventListener('keyup', (e) => {
   // Get input text
   const userText = e.target.value;
 
-  // check if input is empty
-  if(userText !== '') {
-    // 
-    chemical2.searchSurvey(userText)
-    .then(data => {
-      ui.clear();
-      ui.showNutrition(data.response);
-      ui.showBrands(data.response);
-    })
+  // check state
+  const appState = state.getState();
+
+  switch(appState) {
+    case 0:
+      if (userText !== ''){
+        api.searchSurvey(userText)
+        .then(surveyData =>
+          {
+            ui.clear();
+            ui.showNutrition(surveyData.response);
+            ui.showRelatedSearches(surveyData.response);
+          })
+      }
+      break;
+    case 1:
+      if(userText !== '') {
+        // 
+        api.search(userText)
+        .then(data => {
+          api.searchSurvey(userText)
+          .then(surveyData =>
+            {
+              ui.clear();
+              ui.showNutrition(data.response);
+              ui.showRelatedSearches(surveyData.response);
+            })
+        })
+      }
+      break;
   }
+
+  // check if input is empty
 })

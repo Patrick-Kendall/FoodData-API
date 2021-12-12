@@ -18,6 +18,8 @@ class FoodData {
 
     const response = await foodResponse.json();
 
+    console.log(response);
+
     // return response from website in JSON format
     return {
       response
@@ -36,6 +38,8 @@ class FoodData {
     });
 
     const response = await foodResponse.json();
+
+    console.log(response);
 
     // return response from website in JSON format
     return {

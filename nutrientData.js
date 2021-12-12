@@ -161,6 +161,10 @@ class nutrientData {
             case 1106:
                 this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName);
                 break;
+            // Vitamin A Alternative
+            case 1104:
+                this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName);
+                break;
             // Niacin (B3)
             case 1167:
                 this.vitamins.niacin.fill(nutrient.value,nutrient.unitName);
@@ -380,28 +384,7 @@ class nutrientData {
                 this.fats.polyUnsat.PUFA_2x5.fill(nutrient.value,nutrient.unitName);
                 break; 
 
-
-
-            // Vitamin Folate (B)
-            case 1177:
-                this.folic_acid.fill(nutrient.value,nutrient.unitName);
-                break;
-            // Vitamin C
-            case 1162:
-                this.vitamin_C.fill(nutrient.value,nutrient.unitName);
-                break;    
-            // Vitamin D
-            case 1114:
-                this.vitamin_D.fill(nutrient.value,nutrient.unitName);
-                break;
-            // Vitamin K
-            case 1185:
-                this.vitamin_K.fill(nutrient.value,nutrient.unitName);
-                break; 
-            // Vitamin E
-            case 1242:
-                this.vitamin_E.fill(nutrient.value,nutrient.unitName);
-                break;
+                
             // Energy
             case 1008:
                 this.energy.fill(nutrient.value,nutrient.unitName);
