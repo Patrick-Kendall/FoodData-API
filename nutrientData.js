@@ -8,7 +8,7 @@ class nutrientElement extends Object {
 
     // populate data
     fill(weight,units) {
-        this.weight = parseInt(weight);
+        this.weight = weight;
         this.units = units;
     }
 }
@@ -107,6 +107,28 @@ class nutrientData {
                 'mono_unsaturated_Fat' : new nutrientElement(),
                 'poly_unsaturated_Fat' : new nutrientElement()
             }
+        }
+
+        // aminoAcids
+        this.aminoAcids = {
+            'tryptophan' : new nutrientElement(),
+            'threonine' : new nutrientElement(),
+            'methionine' : new nutrientElement(),
+            'phenylalanine' : new nutrientElement(),
+            'tyrosine' : new nutrientElement(),
+            'alanine' : new nutrientElement(),
+            'glutamic_acid' : new nutrientElement(),
+            'glycine' : new nutrientElement(),
+            'proline' : new nutrientElement(),
+            'isoleucine' : new nutrientElement(),
+            'leucine' : new nutrientElement(),
+            'lysine' : new nutrientElement(),
+            'valine' : new nutrientElement(),
+            'arginine' : new nutrientElement(),
+            'aspartic_acid' : new nutrientElement(),
+            'serine' : new nutrientElement(),
+            'histidine' : new nutrientElement(),
+            'cystine' : new nutrientElement()
         }
 
 
@@ -384,7 +406,80 @@ class nutrientData {
                 this.fats.polyUnsat.PUFA_2x5.fill(nutrient.value,nutrient.unitName);
                 break; 
 
-                
+
+            // Tryptophan
+            case 1210:
+                this.aminoAcids.tryptophan.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Threonine
+            case 1211:
+                this.aminoAcids.threonine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Methionine
+            case 1215:
+                this.aminoAcids.methionine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Phenylalanine
+            case 1217:
+                this.aminoAcids.phenylalanine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Tyrosine
+            case 1218:
+                this.aminoAcids.tyrosine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Alanine
+            case 1222:
+                this.aminoAcids.alanine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Glutamic Acid
+            case 1224:
+                this.aminoAcids.glutamic_acid.fill(nutrient.value,nutrient.unitName);
+                break; 
+            // Glycine
+            case 1225:
+                this.aminoAcids.glycine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Proline
+            case 1226:
+                this.aminoAcids.proline.fill(nutrient.value,nutrient.unitName);
+                break;    
+            // Isoleucine
+            case 1212:
+                this.aminoAcids.isoleucine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Leucine
+            case 1213:
+                this.aminoAcids.leucine.fill(nutrient.value,nutrient.unitName);
+                break; 
+            // Lysine
+            case 1214:
+                this.aminoAcids.lysine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Cystine
+            case 1216:
+                this.aminoAcids.cystine.fill(nutrient.value,nutrient.unitName);
+                break; 
+            // Valine
+            case 1219:
+                this.aminoAcids.valine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Arginine
+            case 1220:
+                this.aminoAcids.arginine.fill(nutrient.value,nutrient.unitName);
+                break;    
+            // Histidine
+            case 1221:
+                this.aminoAcids.histidine.fill(nutrient.value,nutrient.unitName);
+                break;
+            // Aspartic Acid
+            case 1223:
+                this.aminoAcids.aspartic_acid.fill(nutrient.value,nutrient.unitName);
+                break; 
+            // Serine
+            case 1227:
+                this.aminoAcids.serine.fill(nutrient.value,nutrient.unitName);
+                break;
+
             // Energy
             case 1008:
                 this.energy.fill(nutrient.value,nutrient.unitName);

@@ -2,26 +2,20 @@ class UI {
   constructor(appState) {
     this.nutrient_tab = document.getElementById("nutrient-tab");
     this.related = document.getElementById("related");
+    this.profile = document.getElementById("profile");
     this.nutrientDat = "";
     this.relatedBrands = "";
     this.majorData = "";
     this.mineralData = "";
     this.vitaminData = "";
+    this.aminoAcidData1 = "";
+    this.aminoAcidData2 = "";
     this.fatBreakdown = "";
     this.fatBreakdown2 = "";
     this.nutrients = new nutrientData;
+    this.brandProfile = new Profile;
     //this.accessToApi = new FoodData;
     this.appState = appState;
-  }
-
-  formatUnits() {
-    this.nutrients.formatUnits(this.nutrients.major);
-    this.nutrients.formatUnits(this.nutrients.fats.sat);
-    this.nutrients.formatUnits(this.nutrients.fats.monoUnsat);
-    this.nutrients.formatUnits(this.nutrients.fats.polyUnsat);
-    this.nutrients.formatUnits(this.nutrients.vitamins);
-    this.nutrients.formatUnits(this.nutrients.minerals);
-    this.nutrients.formatUnits(this.nutrients.misc);
   }
 
   // receive data from fetch; print to webpage
@@ -37,13 +31,16 @@ class UI {
     this.nutrients.loadAll(this.foodOne.foodNutrients);
     this.nutrients.calcTotalWeight(this.nutrients);
 
+    console.log(this.nutrients);
+
     // convert units to SI unit standards
     this.formatUnits();
 
     // process nutrient profile and display in html <tr> groupings
-    this.majorData = this.genHTML_tr(this.nutrients.major);
-    this.mineralData = this.genHTML_tr(this.nutrients.minerals);
+    this.majorData = this.genDecodeHTML_tr(this.nutrients.major);
+    this.mineralData = this.genDecodeHTML_tr(this.nutrients.minerals);
     this.vitaminData = this.genDecodeHTML_tr(this.nutrients.vitamins);
+    this.aminoAcidData = this.genDecodeHTML_tr(this.nutrients.aminoAcids,7);
 
     // 
     this.fatBreakdown = this.genDecodeHTML_tr(this.nutrients.fats.sat) + '<tr> </tr>' + this.genDecodeHTML_tr(this.nutrients.fats.monoUnsat);
@@ -109,6 +106,15 @@ class UI {
               </tr>
               ${this.fatBreakdown2}
               </table>
+            </div>
+            <div class="nutrient-col extended invisible">
+              <table id="entry" class="nutrient-table">
+                <tr>
+                 <th>Amino Acids: </th>
+                </tr>
+                ${this.aminoAcidData}
+              </table>
+            </div>
           </div>
           
           
@@ -138,7 +144,7 @@ class UI {
     })
   }
 
-  // printing to an html div with id ""
+  // printing to an html div with id "related"
   showRelatedSearches(searchResponse) {
     this.relatedBrands = this.genHTML_li(searchResponse.foods);
     
@@ -150,7 +156,7 @@ class UI {
       <a href="#">${this.relatedBrands}</a>
     </ul>
     </div>
-    `
+    `;
 
     // enabling link to new, related searches
     let sim = document.getElementById("similar");
@@ -173,7 +179,7 @@ class UI {
               //update UI
               this.clear();
               this.showNutrition(data.response);
-              this.showBrands(data.response);
+              this.showRelatedSearches(data.response);
             })
           break;
         case 1:
@@ -187,18 +193,54 @@ class UI {
               //update UI
               this.clear();
               this.showNutrition(data.response);
-              this.showBrands(data.response);
+              this.showRelatedSearches(data.response);
             })
           break;
+        case 2:
+          api.searchAll(userText)
+          .then(data =>
+            {
+              // change user input text to similar search term
+              let targ = document.getElementById("searchUser");
+              targ.value = data.response.foods[0].description;
+    
+              //update UI
+              this.clear();
+              this.showNutrition(data.response);
+              this.showRelatedSearches(data.response);
+            })
+          break;
+        case 3:
+          api.searchLegacy(userText)
+          .then(data =>
+            {
+              // change user input text to similar search term
+              let targ = document.getElementById("searchUser");
+              targ.value = data.response.foods[0].description;
+    
+              //update UI
+              this.clear();
+              this.showNutrition(data.response);
+              this.showRelatedSearches(data.response);
+            })
+          break;
+        default:
+          break;
       }
-      // calling api which returns 50 food entries by default
-
     })
   }
 
-  // call clear function on nutrient data structure
+  // printing to an html div with id "profile"
+  showProfile(searchResponse) {
+    this.brandProfile.loadAll(searchResponse);
+
+    console.log(this.brandProfile);
+  }
+
+  // call clear function on nutrient data structure; clears models
   clear() {
     this.nutrients.clear();
+    this.brandProfile = new Profile;
   }
 
     // generate table from inputted array of strings; heading must be included external to this function
@@ -300,5 +342,43 @@ class UI {
       }
 
       return result
+    }
+
+    genLimitedHTML_tr(data,limit) {
+      let result = ``;
+      let index = 0;
+
+      for(const [nutrientName,nutrient] of Object.entries(data)) {
+        index++;
+        console.log(index);
+        if (index < limit) {
+          if (!nutrient.units) {
+
+          } else if (nutrient.weight < 0.01) {
+
+          } else {
+
+            result += `
+            <tr>
+              <td> ${nutrientName.split("_").join(" ")}:</td>
+              <td class="nutrient-value-units">${nutrient.weight} ${nutrient.units} </td>
+            </tr>
+          `
+          }
+        }
+      }
+
+      return result
+    }
+
+    formatUnits() {
+      this.nutrients.formatUnits(this.nutrients.major);
+      this.nutrients.formatUnits(this.nutrients.fats.sat);
+      this.nutrients.formatUnits(this.nutrients.fats.monoUnsat);
+      this.nutrients.formatUnits(this.nutrients.fats.polyUnsat);
+      this.nutrients.formatUnits(this.nutrients.vitamins);
+      this.nutrients.formatUnits(this.nutrients.minerals);
+      this.nutrients.formatUnits(this.nutrients.misc);
+      this.nutrients.formatUnits(this.nutrients.aminoAcids);
     }
 }

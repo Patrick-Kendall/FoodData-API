@@ -26,6 +26,48 @@ class FoodData {
     }
   }
 
+  // search api with dataType=SR Legacy
+  async searchLegacy(food) {
+
+    const foodResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${food}&dataType=SR Legacy`, {
+      method:'GET',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      }
+    });
+
+    const response = await foodResponse.json();
+
+    console.log(response);
+
+    // return response from website in JSON format
+    return {
+      response
+    }
+  }
+
+  // search api with dataType=SR Legacy
+  async searchFoundational(food) {
+
+    const foodResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${food}&dataType=Foundation`, {
+      method:'GET',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      }
+    });
+
+    const response = await foodResponse.json();
+
+    console.log(response);
+
+    // return response from website in JSON format
+    return {
+      response
+    }
+  }
+
   // search API without a dataType filter
   async searchAll(food) {
 
