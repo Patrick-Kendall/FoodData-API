@@ -8,8 +8,7 @@ class UI {
     this.majorData = "";
     this.mineralData = "";
     this.vitaminData = "";
-    this.aminoAcidData1 = "";
-    this.aminoAcidData2 = "";
+    this.aminoAcidData = "";
     this.fatBreakdown = "";
     this.fatBreakdown2 = "";
     this.nutrients = new nutrientData;
@@ -56,7 +55,7 @@ class UI {
             <div class="nutrient-col">
               <table id="entry" class="nutrient-table">
               <tr>
-                 <th>Macronutrients: </th>
+                 <th>Macro: </th>
               </tr>
               ${this.majorData}
               </table>
@@ -65,7 +64,7 @@ class UI {
               <tr> 
                 <td>calories:</td>
                 <td class="nutrient-value-units"> ${this.nutrients.energy.weight} </td>
-              </tr> 
+              </tr>
               </table>
             </div>
             <div class="nutrient-col">
@@ -211,7 +210,7 @@ class UI {
             })
           break;
         case 3:
-          api.searchLegacy(userText)
+          api.searchFoundational(userText)
           .then(data =>
             {
               // change user input text to similar search term
