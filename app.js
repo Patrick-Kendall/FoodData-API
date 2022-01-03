@@ -9,6 +9,8 @@ const state = new State;
 // instance of UI which prints html to two divs in index.html
 const ui = new UI(state);
 
+const data = new DataController(state);
+
 // getting user input from webpage
 const searchUser = document.getElementById('searchUser');
 
@@ -60,9 +62,11 @@ searchUser.addEventListener('keyup', (e) => {
       api.searchFoundational(userText)
       .then(allData =>
         {
-          ui.clear();
-          ui.showNutrition(allData.response);
-          ui.showRelatedSearches(allData.response);
+          data.clear();
+          data.processNutrition(allData.response);
+          ui.showNutrition();
+          data.processRelatedBrands(allData.response);
+          ui.showRelatedSearches();
         })
       break;
     default:

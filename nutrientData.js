@@ -4,18 +4,33 @@ class nutrientElement extends Object {
         super();
         this.weight = 0;
         this.units = "";
+        this.rdv = 1;
+        this.rdvPercent = 0;
     }
 
+    
     // populate data
-    fill(weight,units) {
+    fill(weight,units,rdv) {
         this.weight = weight;
         this.units = units;
+        this.rdv = rdv;
     }
+
+    calculateRdvPercent() {
+        let res = this.weight/this.rdv*100*10;
+        let ref = parseInt(res);
+        this.rdvPercent = ref/10;
+        
+    }
+
 }
 
 // structure to organize food nutrient data
 class nutrientData {
     constructor() {
+
+        // setting serving size
+        //this.servingSize = serving;
 
         // total weight of nutrients
         this.totalWeight = 0;
@@ -24,7 +39,8 @@ class nutrientData {
         this.major = {
             'protein' : new nutrientElement(),
             'fat' : new nutrientElement(),
-            'carb' : new nutrientElement()
+            'carb' : new nutrientElement(),
+            'water' : new nutrientElement()
         }
 
         // minerals
@@ -37,7 +53,7 @@ class nutrientData {
             'copper' : new nutrientElement(),
             'potassium' : new nutrientElement(),
             'sodium' : new nutrientElement(),
-            'selenium' : new nutrientElement(),
+            'selenium' : new nutrientElement()
         }
 
 
@@ -64,12 +80,12 @@ class nutrientData {
             'cholesterol' : new nutrientElement(),
             'caffeine' : new nutrientElement(),
             'theobromine' : new nutrientElement(),
-            'retinol' : new nutrientElement(),
             'alcohol' : new nutrientElement(),
             'fiber' : new nutrientElement()
         }
 
         this.energy = new nutrientElement();
+
 
 
         // fats
@@ -82,14 +98,14 @@ class nutrientData {
                 'SFA_14x0' : new nutrientElement(),
                 'SFA_16x0' : new nutrientElement(),
                 'SFA_18x0' : new nutrientElement(),
-                'SFA_20x0' : new nutrientElement(),
+                'SFA_20x0' : new nutrientElement()
             },
     
             'monoUnsat' : {
                 'MUFA_16x1' : new nutrientElement(),
                 'MUFA_18x1' : new nutrientElement(),
                 'MUFA_20x1' : new nutrientElement(),
-                'MUFA_22x1' : new nutrientElement(),
+                'MUFA_22x1' : new nutrientElement()
             },
     
             'polyUnsat' : {
@@ -158,19 +174,26 @@ class nutrientData {
         switch (nutrientId) {
             // Protein 
             case 1003:
-                this.major.protein.fill(nutrient.value,nutrient.unitName);
+                this.major.protein.fill(nutrient.value,nutrient.unitName,50);
+                this.major.protein.calculateRdvPercent();
                 break;
             // Lipid 
             case 1004:
-                this.major.fat.fill(nutrient.value,nutrient.unitName);
+                this.major.fat.fill(nutrient.value,nutrient.unitName,78);
+                this.major.fat.calculateRdvPercent();
                 break; 
             // Carbohydrate
             case 1005:
-                this.major.carb.fill(nutrient.value,nutrient.unitName);
+                this.major.carb.fill(nutrient.value,nutrient.unitName,275);
+                this.major.carb.calculateRdvPercent();
                 break;    
+            case 1051:
+                this.major.water.fill(nutrient.value,nutrient.unitName);
+                break;
             // Fiber
             case 1079:
-                this.misc.fiber.fill(nutrient.value,nutrient.unitName);
+                this.misc.fiber.fill(nutrient.value,nutrient.unitName,28);
+                this.misc.fiber.calculateRdvPercent();
                 break;
 
             // Ethyl Alcohol
@@ -181,99 +204,111 @@ class nutrientData {
 
             // Vitamin A
             case 1106:
-                this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName,900);
+                this.vitamins.vitamin_A.calculateRdvPercent();
                 break;
             // Vitamin A Alternative
             case 1104:
-                this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_A.fill(nutrient.value,nutrient.unitName,900);
+                this.vitamins.vitamin_A.calculateRdvPercent();
                 break;
             // Niacin (B3)
             case 1167:
-                this.vitamins.niacin.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.niacin.fill(nutrient.value,nutrient.unitName,16);
+                this.vitamins.niacin.calculateRdvPercent();
                 break;
             // Thiamin (B1)
             case 1165:
-                this.vitamins.thiamin.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.thiamin.fill(nutrient.value,nutrient.unitName,1.2);
+                this.vitamins.thiamin.calculateRdvPercent();
                 break;
             // Riboflavin
             case 1166:
-                this.vitamins.riboflavin.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.riboflavin.fill(nutrient.value,nutrient.unitName,1.3);
+                this.vitamins.riboflavin.calculateRdvPercent();
                 break;
             // Vitamin B6
             case 1175:
-                this.vitamins.vitamin_B6.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_B6.fill(nutrient.value,nutrient.unitName,1.7);
+                this.vitamins.vitamin_B6.calculateRdvPercent();
                 break;
             // Vitamin B12
             case 1178:
-                this.vitamins.vitamin_B12.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_B12.fill(nutrient.value,nutrient.unitName,2.4);
+                this.vitamins.vitamin_B12.calculateRdvPercent();
                 break; 
             // Vitamin Folate (B)
             case 1177:
-                this.vitamins.folic_acid.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.folic_acid.fill(nutrient.value,nutrient.unitName,400);
+                this.vitamins.folic_acid.calculateRdvPercent();
                 break;
             // Vitamin C
             case 1162:
-                this.vitamins.vitamin_C.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_C.fill(nutrient.value,nutrient.unitName,90);
+                this.vitamins.vitamin_C.calculateRdvPercent();
                 break;    
             // Vitamin D
             case 1114:
-                this.vitamins.vitamin_D.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_D.fill(nutrient.value,nutrient.unitName,20);
+                this.vitamins.vitamin_D.calculateRdvPercent();
                 break;
             // Vitamin K
             case 1185:
-                this.vitamins.vitamin_K.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_K.fill(nutrient.value,nutrient.unitName,120);
+                this.vitamins.vitamin_K.calculateRdvPercent();
                 break; 
             // Vitamin E
             case 1242:
-                this.vitamins.vitamin_E.fill(nutrient.value,nutrient.unitName);
+                this.vitamins.vitamin_E.fill(nutrient.value,nutrient.unitName,15);
+                this.vitamins.vitamin_E.calculateRdvPercent();
                 break;
 
 
             // Calcium
             case 1087:
-                this.minerals.calcium.fill(nutrient.value,nutrient.unitName);
+                this.minerals.calcium.fill(nutrient.value,nutrient.unitName,1300);
+                this.minerals.calcium.calculateRdvPercent();
                 break;
             // Iron
             case 1089:
-                this.minerals.iron.fill(nutrient.value,nutrient.unitName);
+                this.minerals.iron.fill(nutrient.value,nutrient.unitName,18);
+                this.minerals.iron.calculateRdvPercent();
                 break;
             // Magnesium
             case 1090:
-                this.minerals.magnesium.fill(nutrient.value,nutrient.unitName);
+                this.minerals.magnesium.fill(nutrient.value,nutrient.unitName,420);
+                this.minerals.magnesium.calculateRdvPercent();
                 break;
             // Phosphorous
             case 1091:
-                this.minerals.phosphorous.fill(nutrient.value,nutrient.unitName);
+                this.minerals.phosphorous.fill(nutrient.value,nutrient.unitName,1250);
+                this.minerals.phosphorous.calculateRdvPercent();
                 break;
             // Sodium
             case 1093:
-                this.minerals.sodium.fill(nutrient.value,nutrient.unitName);
+                this.minerals.sodium.fill(nutrient.value,nutrient.unitName,2300);
+                this.minerals.sodium.calculateRdvPercent();
                 break;
             // Potassium
             case 1092:
-                this.minerals.potassium.fill(nutrient.value,nutrient.unitName);
+                this.minerals.potassium.fill(nutrient.value,nutrient.unitName,4700);
+                this.minerals.potassium.calculateRdvPercent();
                 break; 
             // Zinc
             case 1095:
-               this.minerals.zinc.fill(nutrient.value,nutrient.unitName);
+               this.minerals.zinc.fill(nutrient.value,nutrient.unitName,11);
+               this.minerals.zinc.calculateRdvPercent();
                 break;
             // Selenium
             case 1103:
-               this.minerals.selenium.fill(nutrient.value,nutrient.unitName);
+               this.minerals.selenium.fill(nutrient.value,nutrient.unitName,55);
+               this.minerals.selenium.calculateRdvPercent();
                 break;    
             // Copper
             case 1098:
-                this.minerals.copper.fill(nutrient.value,nutrient.unitName);
+                this.minerals.copper.fill(nutrient.value,nutrient.unitName,0.9);
+                this.minerals.copper.calculateRdvPercent();
                 break;
-            // Vitamin K
-            case 1185:
-                this.vitamins.vitamin_K.fill(nutrient.value,nutrient.unitName);
-                break; 
-            // Vitamin E
-            case 1242:
-                this.vitamins.vitamin_E.fill(nutrient.value,nutrient.unitName);
-                break;
-
 
             // Sugars
             case 2000:
@@ -482,7 +517,8 @@ class nutrientData {
 
             // Energy
             case 1008:
-                this.energy.fill(nutrient.value,nutrient.unitName);
+                this.energy.fill(nutrient.value,nutrient.unitName,2000);
+                this.energy.calculateRdvPercent();
                 break;
         }
 
@@ -491,7 +527,10 @@ class nutrientData {
 
     // clear the nutrient profile
     clear() {
- 
+
+        // setting serving size
+        //this.servingSize = serving;
+
         // total weight of nutrients
         this.totalWeight = 0;
 
@@ -499,7 +538,8 @@ class nutrientData {
         this.major = {
             'protein' : new nutrientElement(),
             'fat' : new nutrientElement(),
-            'carb' : new nutrientElement()
+            'carb' : new nutrientElement(),
+            'water' : new nutrientElement()
         }
 
         // minerals
@@ -512,8 +552,9 @@ class nutrientData {
             'copper' : new nutrientElement(),
             'potassium' : new nutrientElement(),
             'sodium' : new nutrientElement(),
-            'selenium' : new nutrientElement(),
+            'selenium' : new nutrientElement()
         }
+
 
         // vitamins
         this.vitamins = {
@@ -538,7 +579,6 @@ class nutrientData {
             'cholesterol' : new nutrientElement(),
             'caffeine' : new nutrientElement(),
             'theobromine' : new nutrientElement(),
-            'retinol' : new nutrientElement(),
             'alcohol' : new nutrientElement(),
             'fiber' : new nutrientElement()
         }
@@ -556,14 +596,14 @@ class nutrientData {
                 'SFA_14x0' : new nutrientElement(),
                 'SFA_16x0' : new nutrientElement(),
                 'SFA_18x0' : new nutrientElement(),
-                'SFA_20x0' : new nutrientElement(),
+                'SFA_20x0' : new nutrientElement()
             },
     
             'monoUnsat' : {
                 'MUFA_16x1' : new nutrientElement(),
                 'MUFA_18x1' : new nutrientElement(),
                 'MUFA_20x1' : new nutrientElement(),
-                'MUFA_22x1' : new nutrientElement(),
+                'MUFA_22x1' : new nutrientElement()
             },
     
             'polyUnsat' : {
@@ -583,6 +623,28 @@ class nutrientData {
             }
         }
 
+        // aminoAcids
+        this.aminoAcids = {
+            'tryptophan' : new nutrientElement(),
+            'threonine' : new nutrientElement(),
+            'methionine' : new nutrientElement(),
+            'phenylalanine' : new nutrientElement(),
+            'tyrosine' : new nutrientElement(),
+            'alanine' : new nutrientElement(),
+            'glutamic_acid' : new nutrientElement(),
+            'glycine' : new nutrientElement(),
+            'proline' : new nutrientElement(),
+            'isoleucine' : new nutrientElement(),
+            'leucine' : new nutrientElement(),
+            'lysine' : new nutrientElement(),
+            'valine' : new nutrientElement(),
+            'arginine' : new nutrientElement(),
+            'aspartic_acid' : new nutrientElement(),
+            'serine' : new nutrientElement(),
+            'histidine' : new nutrientElement(),
+            'cystine' : new nutrientElement()
+        }
+
 
         // sugars
         this.sugars = {
@@ -592,10 +654,12 @@ class nutrientData {
             'total' : new nutrientElement()
         }
 
+
+
     }
 
     // calculate weight of nutrients while avoiding duplicate nutrient entries, i.e. total fat versus individual fats
-    calcTotalWeight(data) {
+    calcTotalWeight() {
         for (const [key,value] of Object.entries(this.major)) {
             this.totalWeight += value.weight;
         }
@@ -657,5 +721,7 @@ class nutrientData {
             }
         }
     }
+
+    
 
 }
