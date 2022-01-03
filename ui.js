@@ -30,58 +30,69 @@ class UI {
       switch(searchType) {
         case 0:
           api.searchSurvey(userText)
-          .then(data =>
+          .then(surveyData =>
             {
               // change user input text to similar search term
               let targ = document.getElementById("searchUser");
-              targ.value = data.response.foods[0].description;
+              targ.value = surveyData.response.foods[0].description;
     
               //update UI
-              this.clear();
-              this.showNutrition(data.response);
-              this.showRelatedSearches(data.response);
+              data.clear();
+              data.processNutrition(surveyData.response);
+              ui.showNutrition();
+              data.processRelatedBrands(surveyData.response);
+              ui.showRelatedSearches();
             })
           break;
         case 1:
-          api.search(userText)
-          .then(data =>
-            {
+          api.searchBrand(userText)
+          .then(brandData => {
+            api.searchSurvey(userText)
+            .then(surveyData =>
+              {
               // change user input text to similar search term
               let targ = document.getElementById("searchUser");
-              targ.value = data.response.foods[0].description;
+              targ.value = brandData.response.foods[0].description;
     
               //update UI
-              this.clear();
-              this.showNutrition(data.response);
-              this.showRelatedSearches(data.response);
+              data.clear();
+              data.processNutrition(brandData.response);
+              ui.showNutrition();
+              data.processRelatedBrands(surveyData.response);
+              ui.showRelatedSearches();
             })
+          })
           break;
         case 2:
           api.searchAll(userText)
-          .then(data =>
+          .then(allData =>
             {
               // change user input text to similar search term
               let targ = document.getElementById("searchUser");
-              targ.value = data.response.foods[0].description;
+              targ.value = allData.response.foods[0].description;
     
               //update UI
-              this.clear();
-              this.showNutrition(data.response);
-              this.showRelatedSearches(data.response);
+              data.clear();
+              data.processNutrition(allData.response);
+              ui.showNutrition();
+              data.processRelatedBrands(allData.response);
+              ui.showRelatedSearches();
             })
           break;
         case 3:
           api.searchFoundational(userText)
-          .then(data =>
+          .then(foundationData =>
             {
               // change user input text to similar search term
               let targ = document.getElementById("searchUser");
-              targ.value = data.response.foods[0].description;
+              targ.value = foundationData.response.foods[0].description;
     
               //update UI
-              this.clear();
-              this.processNutrition(data.response);
-              this.showRelatedSearches(data.response);
+              data.clear();
+              data.processNutrition(foundationData.response);
+              ui.showNutrition();
+              data.processRelatedBrands(foundationData.response);
+              ui.showRelatedSearches();
             })
           break;
         default:
@@ -91,10 +102,7 @@ class UI {
   }
 
   // printing to an html div with id "profile"
-  showProfile(searchResponse) {
-    this.brandProfile.loadAll(searchResponse);
-
-    console.log(this.brandProfile);
+  showProfile() {
   }
 
   showNutrition() {
@@ -194,45 +202,5 @@ class UI {
    }
  })
   }
-
-    // generate table from inputted array of strings; heading must be included external to this function
-    generateTable(data) {
-      let result = ``;
-      let index = 0;
-      
-      data.forEach(brand =>
-      {  
-        if(index % 3 == 0) {
-            result += `
-              </tr>
-              <tr>
-                 <td>${brand.nutrientName} : ${brand.value} ${brand.unitName}
-               `
-          } else {
-            result += `<td id="entry">${brand.nutrientName} : ${brand.value} ${brand.unitName}</td>`
-          }
-          index++;
-        });
-      result += `</tr> </table>`;
-  
-      return result
-    }
-
-    // generates html <tr> instances with 
-    genTableFromArray(data) {
-      let result = ``;
-      
-      data.forEach(brand =>
-      {  
-            result += `
-              <tr>
-                 <td>${brand.lowercaseDescription}
-              </tr>
-               `;
-          index++;
-        });
-  
-      return result
-    }
 
 }

@@ -6,7 +6,7 @@ class FoodData {
   }
 
   //calling URL with fetch; using "Branded" endpoint to fetch ingredients and limited nutrient data
-  async search(food) {
+  async searchBrand(food) {
 
     const foodResponse = await fetch (`${this.baseEndpoint}/search?api_key=${this.apiKey}&query=${food}&dataType=Branded`, {
       method:'GET',

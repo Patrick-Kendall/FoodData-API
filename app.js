@@ -27,24 +27,27 @@ searchUser.addEventListener('keyup', (e) => {
         api.searchSurvey(userText)
         .then(surveyData =>
           {
-            ui.clear();
-            ui.showNutrition(surveyData.response);
-            ui.showRelatedSearches(surveyData.response);
+            data.clear();
+            data.processNutrition(surveyData.response);
+            ui.showNutrition();
+            data.processRelatedBrands(surveyData.response);
+            ui.showRelatedSearches();
           })
       }
       break;
     case 1:
       if(userText !== '') {
         // 
-        api.search(userText)
-        .then(data => {
+        api.searchBrand(userText)
+        .then(brandData => {
           api.searchSurvey(userText)
           .then(surveyData =>
             {
-              ui.clear();
-              ui.showNutrition(data.response);
-              ui.showRelatedSearches(surveyData.response);
-              ui.showProfile(data.response.foods[0]);
+              data.clear();
+              data.processNutrition(brandData.response);
+              ui.showNutrition();
+              data.processRelatedBrands(surveyData.response);
+              ui.showRelatedSearches();
             })
         })
       }
@@ -53,19 +56,21 @@ searchUser.addEventListener('keyup', (e) => {
       api.searchAll(userText)
       .then(allData =>
         {
-          ui.clear();
-          ui.showNutrition(allData.response);
-          ui.showRelatedSearches(allData.response);
-        })
-      break;
-    case 3:
-      api.searchFoundational(userText)
-      .then(allData =>
-        {
           data.clear();
           data.processNutrition(allData.response);
           ui.showNutrition();
           data.processRelatedBrands(allData.response);
+          ui.showRelatedSearches();
+        })
+      break;
+    case 3:
+      api.searchFoundational(userText)
+      .then(foundationData =>
+        {
+          data.clear();
+          data.processNutrition(foundationData.response);
+          ui.showNutrition();
+          data.processRelatedBrands(foundationData.response);
           ui.showRelatedSearches();
         })
       break;

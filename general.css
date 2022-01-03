@@ -51,6 +51,10 @@ a {
     text-align: right;
 }
 
+.nutrient-value-vanish {
+    display: none;
+}
+
 #profile {
     margin-top: 60px;
 }
