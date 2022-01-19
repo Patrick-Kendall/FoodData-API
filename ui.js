@@ -6,24 +6,92 @@ class UI {
     this.appState = appState;
   }
 
-  // printing to an html div with id "related"
-  showRelatedSearches() {
-    // printing to htlm div : related
-    this.related.innerHTML = `
-    <div class = "relatedList">
-    <h4> Related Searches </h4>
-    <ul id="similar">
-      <a href="#">${data.relatedBrandsList}</a>
-    </ul>
-    </div>
-    `;
+  createSearchUser() {
+    
+// getting user input from webpage
+const searchUser = document.getElementById('searchUser');
 
+  searchUser.addEventListener('keypress', (e) => {
+  // Get input text
+  let userText = e.target.value;
+
+  // check state
+  const appState = state.getState();
+
+
+  const key = e.code;
+
+  if (key == 'Enter') {
+    switch(appState) {
+      case 0:
+        if (userText !== ''){
+          api.searchSurvey(userText)
+          .then(surveyData =>
+            {
+              data.clear();
+              data.processNutrition(surveyData.response);
+              ui.showNutrition();
+              data.processRelatedBrands(surveyData.response);
+              ui.showRelatedSearches();
+            })
+        }
+        break;
+      case 1:
+        if(userText !== '') {
+          // 
+          api.searchBrand(userText)
+          .then(brandData => {
+            api.searchSurvey(userText)
+            .then(surveyData =>
+              {
+                data.clear();
+                data.processNutrition(brandData.response);
+                ui.showNutrition();
+                data.processRelatedBrands(surveyData.response);
+                ui.showRelatedSearches();
+              })
+          })
+        }
+        break;
+      case 2:
+        api.searchAll(userText)
+        .then(allData =>
+          {
+            data.clear();
+            data.processNutrition(allData.response);
+            ui.showNutrition();
+            data.processRelatedBrands(allData.response);
+            ui.showRelatedSearches();
+          })
+        break;
+      case 3:
+        api.searchFoundational(userText)
+        .then(foundationData =>
+          {
+            data.clear();
+            data.processNutrition(foundationData.response);
+            ui.showNutrition();
+            data.processRelatedBrands(foundationData.response);
+            ui.showRelatedSearches();
+          })
+        break;
+      default:
+        break;
+    }
+  }
+})
+  }
+
+  createSimilarSearch() {
     // enabling link to new, related searches
     let sim = document.getElementById("similar");
     sim.addEventListener('click',(e) => 
     {
-      const userText = e.target.innerHTML;
-      const api = new FoodData;
+      let userText = e.target.innerHTML;
+
+      // convert % to URL encoded "%26"
+      userText = userText.split("%").join("%26");
+
       const searchType = this.appState.getState();
 
 
@@ -101,6 +169,22 @@ class UI {
     })
   }
 
+  // printing to an html div with id "related"
+  showRelatedSearches() {
+    // printing to htlm div : related
+    this.related.innerHTML = `
+    <div class = "relatedList">
+    <h4> Related Searches </h4>
+    <ul id="similar">
+      <a href="#">${data.relatedBrandsList}</a>
+    </ul>
+    </div>
+    `;
+
+    this.createSimilarSearch();
+
+  }
+
   // printing to an html div with id "profile"
   showProfile() {
   }
@@ -110,7 +194,7 @@ class UI {
        this.nutrient_tab.innerHTML = `
        <div class="nutrient-container">
 
-       <h4 class="nutrient-header" id="nutrient-header"> ${data.foodOne.description} : 100g Serving<br>
+       <h4 class="nutrient-header" id="nutrient-header"> ${data.foodOne.description} : <span id="serving-value">${state.serving}</span>g Serving<br>
        </h4>
        <div class="nutrient-flex">
          <div class="nutrient-col">

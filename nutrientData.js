@@ -520,6 +520,12 @@ class nutrientData {
                 this.energy.fill(nutrient.value,nutrient.unitName,2000);
                 this.energy.calculateRdvPercent();
                 break;
+
+            // Alternative Energy
+            case 2048:
+                this.energy.fill(nutrient.value,nutrient.unitName,2000);
+                this.energy.calculateRdvPercent();
+                break;
         }
 
 

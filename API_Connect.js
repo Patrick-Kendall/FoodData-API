@@ -1,4 +1,4 @@
-class FoodData {
+class FoodDataConnect {
   constructor() {
     this.baseEndpoint = `https://api.nal.usda.gov/fdc/v1/foods`;
     this.apiKey = `d7Oz5ahadOFQJVmGbPy73LiaSEzitDK8BucZSdgB`;
