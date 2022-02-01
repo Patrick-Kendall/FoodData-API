@@ -1,0 +1,54 @@
+body {
+    font-size: 0.95em;
+    padding: 0px;
+    margin: 20px;
+    background-color: rgb(37, 37, 33);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content {
+    padding: 40px;
+    padding-top:20px;
+}
+
+h3 {
+    color: blanchedalmond;
+    font-size: 1.6em;
+}
+
+h4 {
+    color:rgb(177, 175, 175);
+    font-size: 1.3em;
+}
+
+a {
+    color: blanchedalmond;
+    text-decoration: none;
+}
+
+#profile {
+    margin-top: 30px;
+}
+
+.invisible {
+    display: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    margin-top: 18px;
+    margin-bottom: 15px;
+    background: rgb(77, 66, 66); 
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

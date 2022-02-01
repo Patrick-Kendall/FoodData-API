@@ -1,0 +1,146 @@
+/* 
+
+** TABLE OF CONTENTS ** 02/01/2022
+
+1. Nutrient Display: 
+    the six columns presenting food nutritional information
+
+2. Related Search List: 
+    the list of searches with same keyword in title
+
+3. Search Input Field: 
+    the input field where one types food name
+
+4. Serving Control Input Field:
+    dropdown input for changing serving size (currently not used)
+
+*/
+
+
+/* Nutrient Display */
+
+.nutrient-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: left;
+  column-gap: 10px;
+}
+
+.nutrient-col {
+  background-color: rgb(24, 20, 20);
+  border: 1px black solid;
+  color:blanchedalmond;
+  padding: 10px;
+  margin: 1px;
+  min-width: 160px;
+  width:auto;
+  height: 300px;
+  box-shadow: 1px 2px 2px black;
+  overflow: auto;
+}
+
+.nutrient-frame {
+  width:auto;
+  color:blanchedalmond;
+  background-color: rgb(24, 20, 20);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid black;
+  padding: 10px;
+  margin: 1px;
+  height: 300px;
+  cursor: pointer;
+  box-shadow: 1px 2px 2px black;
+}
+
+.nutrient-frame-plus {
+    margin-top: 130px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nutrient-table {
+    width: 100%;
+    border-collapse: collapse;
+    cursor: context-menu;
+}
+
+.nutrient-table-header {
+    text-align: left;
+}
+
+.nutrient-table-row:hover {
+    background-color: rgba(127, 255, 212, 0.308);
+}
+
+.nutrient-table-units {
+    text-align: right;
+}
+
+.nutrient-caption {
+    color: blanchedalmond;
+}
+
+.nutrient-row-extended {
+    margin-top: 10px;
+}
+
+
+/* Related Search List */
+
+#related {
+    cursor:pointer;
+    color: blanchedalmond;
+    text-decoration: none;
+}
+
+.relatedList {
+    text-transform: capitalize;
+    font-size: 1em;
+}
+
+/* Search Input Field */
+
+.search-control {
+    width: 400px;
+    color:blanchedalmond;
+    padding:6px;
+    font-size: 1.2em;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 0.5px solid rgb(177, 175, 175);
+    border-radius: 3px;
+    box-shadow: rgb(17, 17, 175);
+    background-color: rgb(37,37,37);
+    border-style: groove;
+}
+
+/* Serving Control Input Field */
+
+.serving-control {
+    float: right;
+    display: block; 
+    text-align: left;
+    width: 50px;
+    color:blanchedalmond;
+    padding:6px;
+    font-size: 1.2em;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 0.5px solid rgb(177, 175, 175);
+    border-radius: 3px;
+    box-shadow: rgb(17, 17, 175);
+}
+
+.serving-choices {
+    text-decoration: none;
+    list-style-type: none;
+    padding-inline-start: 0px;
+    margin:0px;
+}
+
+.serving-choice {
+    position: relative;
+    display: none;
+}
+
+.current-choice {
+    display: inline;
+}

@@ -4,40 +4,34 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="general.css">
-  <link rel="stylesheet" href="nutrientTable.css">
+  <link rel="stylesheet" href="css/general.css">
+  <link rel="stylesheet" href="css/objects.css">
   <title>Nutrient Finder</title>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="navbar">
-      <div class="navbar-brand"><h3>Department of Agriculture (DOA) Search</h3></div>
-    </div>
-  </nav>
-
-  <div class="body">
-  <div class="container searchContainer">
-    <div class="search card card-body">
-      <h4 class="lead">Enter a food to search the DOA database</h4>
-      <input type="text" id="searchUser" class="search-control" placeholder="Food Name">
-      <div id="servingSize" class="serving-control"><ul class="serving-choices"><li class="serving-choice current-choice">100g</li><li class="serving-choice">50g</li></ul></div>
-      <br>
-      <div id="nutrient-tab"></div>
-      <br>
-      <div id="profile"></div>
-      <br>
-      <div id="related"></div>
-    </div>
+  <div class="header">
+    <div class="header-title"><h3>Department of Agriculture (DOA) Search</h3></div>
   </div>
+
+  <div class="content">
+    <h4 class="lead">Enter a food to search the DOA database</h4>
+    <input type="text" id="searchUser" class="search-control" placeholder="Food Name">
+    <!--<div id="servingSize" class="serving-control"><ul class="serving-choices"><li class="serving-choice current-choice">100g</li><li class="serving-choice">50g</li></ul></div>-->
+    <br>
+    <div id="nutrient-tab"></div>
+    <br>
+    <div id="profile"></div>
+    <br>
+    <div id="related"></div>
   </div>
 
 
 <!-- custom JS *do not change order of scripts -->
-  <script src="state.js"></script>
-  <script src="controllers.js"></script>
-  <script src="nutrientData.js"></script>
-  <script src="API_Connect.js"></script>
-  <script src="ui.js"></script>
-  <script src="app.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/nutrientData.js"></script>
+  <script src="js/API_Connect.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

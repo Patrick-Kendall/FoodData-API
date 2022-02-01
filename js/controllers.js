@@ -54,10 +54,10 @@ class HTMLController {
         } else {
 
           result += `
-          <tr>
+          <tr class="nutrient-table-row">
             <td> ${nutrientName.split("_").join(" ")}:</td>
-            <td class="nutrient-value-units"> ${nutrient.weight} ${nutrient.units} </td>
-            <td class="nutrient-value-vanish">${nutrient.rdvPercent} % </td>
+            <td class="nutrient-table-units"> ${nutrient.weight} ${nutrient.units} </td>
+            <td class="invisible">${nutrient.rdvPercent} % </td>
           </tr>
         `
         }
