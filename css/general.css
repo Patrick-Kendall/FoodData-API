@@ -1,19 +1,19 @@
 body {
-    font-size: 0.95em;
+    font-size: 0.96em;
     padding: 0px;
-    margin: 20px;
+    margin: 1.25em;
     background-color: rgb(37, 37, 33);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .content {
-    padding: 40px;
-    padding-top:20px;
+    padding: 1.8em;
+    padding-top:0.5em;
 }
 
 h3 {
     color: blanchedalmond;
-    font-size: 1.6em;
+    font-size: 1.4em;
 }
 
 h4 {
@@ -37,6 +37,7 @@ a {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 5px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {

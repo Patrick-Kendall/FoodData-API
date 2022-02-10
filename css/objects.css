@@ -22,20 +22,21 @@
 .nutrient-row {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
+  overflow: auto;
   align-content: left;
-  column-gap: 10px;
+  column-gap: 0.675em;
 }
 
 .nutrient-col {
   background-color: rgb(24, 20, 20);
   border: 1px black solid;
   color:blanchedalmond;
-  padding: 10px;
+  padding: 0.6em;
   margin: 1px;
-  min-width: 160px;
+  min-width: 10.4em;
   width:auto;
-  height: 300px;
+  height: 20em;
   box-shadow: 1px 2px 2px black;
   overflow: auto;
 }
@@ -46,15 +47,15 @@
   background-color: rgb(24, 20, 20);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border: 1px solid black;
-  padding: 10px;
+  padding: 0.6em;
   margin: 1px;
-  height: 300px;
+  height: 20em;
   cursor: pointer;
   box-shadow: 1px 2px 2px black;
 }
 
 .nutrient-frame-plus {
-    margin-top: 130px;
+    margin-top: 9em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -81,7 +82,7 @@
 }
 
 .nutrient-row-extended {
-    margin-top: 10px;
+    margin-top: 0.8em;
 }
 
 
@@ -101,7 +102,7 @@
 /* Search Input Field */
 
 .search-control {
-    width: 400px;
+    width: 25em;
     color:blanchedalmond;
     padding:6px;
     font-size: 1.2em;
