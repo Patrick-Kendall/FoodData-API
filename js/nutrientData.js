@@ -8,7 +8,6 @@ class nutrientElement extends Object {
         this.rdvPercent = 0;
     }
 
-    
     // populate data
     fill(weight,units,rdv) {
         this.weight = weight;
@@ -22,7 +21,6 @@ class nutrientElement extends Object {
         this.rdvPercent = ref/10;
         
     }
-
 }
 
 // structure to organize food nutrient data
@@ -168,7 +166,7 @@ class nutrientData {
 
     // sorts each nutrient according to provided nutrientId
     sortMessage(nutrient) {
-        let nutrientId = nutrient.nutrientId;
+        const nutrientId = nutrient.nutrientId;
         switch (nutrientId) {
             // Protein 
             case 1003:
@@ -713,8 +711,6 @@ class nutrientData {
                     break;
             }
         }
-
-        console.log(this.totalWeight);
     }
 
     // convert unit text from capital to lowercase and substitute in micro gram symbol
@@ -742,4 +738,98 @@ class nutrientData {
 
     
 
+}
+
+class compareData {
+    
+}
+
+class AppData {
+    constructor() {
+
+        // caching past searches; "full" stores the full response with 50 food entries; the rest store a single food entry
+        this.cache = {
+            "survey" : [],
+            "branded" : [],
+            "foundation" : [],
+            "all" : [],
+            "full" : []
+        };
+        this.nutrients = new nutrientData;
+        this.api = new FoodDataConnect;
+    }
+
+
+    // fetch data from Survey branch of API; add 0 entry to cache; load top of cache into nutrient object
+    async searchSurvey(userText) {
+        api.searchSurvey(userText)
+        .then(surveyData => 
+            {
+                // add 0 entry to cache
+                this.cache.full.push(surveyData.response);
+                this.cache.survey.push(surveyData.response.foods[0]);
+
+
+                this.nutrients.loadAll(surveyData[0].response.foods[0].foodNutrients);
+                this.nutrients.calcTotalWeight(this.nutrients);
+            })
+    }
+
+    async searchBranded(userText) {
+        api.searchBrand(userText)
+        .then(brandData => {
+            this.cache.full.push(brandData.response);
+            this.cache.brand.push(brandData.response.foods[0]);
+
+            this.nutrients.loadAll(brandData[0].response.foods[0].foodNutrients);
+            this.nutrients.calcTotalWeight(this.nutrients);
+        })
+    }
+
+    async searchAll(userText) {
+        await this.api.searchAll(userText)
+        .then(allData => {
+
+
+            this.cache.full.push(allData.response);
+            this.cache.all.push(allData.response.foods[0]);
+
+            this.nutrients.loadAll(allData.response.foods[0].foodNutrients);
+            this.nutrients.calcTotalWeight(this.nutrients);
+
+            console.log(this.nutrients);
+        })
+        
+    }
+
+    async searchFoundation(userText) {
+        api.searchFoundational(userText)
+        .then(foundationData => {
+            this.cache.foundation.push(foundationData[0]);
+
+            this.nutrients.loadAll(foundationData[0].response.foods[0].foodNutrients);
+            this.nutrients.calcTotalWeight(this.nutrients);
+
+        })
+    }
+    
+  formatUnits() {
+    this.nutrients.formatUnits(this.nutrients.major);
+    this.nutrients.formatUnits(this.nutrients.fats.sat);
+    this.nutrients.formatUnits(this.nutrients.fats.monoUnsat);
+    this.nutrients.formatUnits(this.nutrients.fats.polyUnsat);
+    this.nutrients.formatUnits(this.nutrients.vitamins);
+    this.nutrients.formatUnits(this.nutrients.minerals);
+    this.nutrients.formatUnits(this.nutrients.misc);
+    this.nutrients.formatUnits(this.nutrients.aminoAcids);
+  }
+
+    clear() {
+        this.cache = {
+            "survey" : [],
+            "branded" : [],
+            "foundation" : [],
+            "all" : []
+        };
+    }
 }

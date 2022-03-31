@@ -18,8 +18,6 @@ class FoodDataConnect {
 
     const response = await foodResponse.json();
 
-    console.log(response);
-
     // return response from website in JSON format
     return {
       response
@@ -38,9 +36,6 @@ class FoodDataConnect {
     });
 
     const response = await foodResponse.json();
-
-    console.log(response);
-
     // return response from website in JSON format
     return {
       response
@@ -59,8 +54,6 @@ class FoodDataConnect {
     });
 
     const response = await foodResponse.json();
-
-    console.log(response);
 
     // return response from website in JSON format
     return {
@@ -81,8 +74,6 @@ class FoodDataConnect {
 
     const response = await foodResponse.json();
 
-    console.log(response);
-
     // return response from website in JSON format
     return {
       response
@@ -101,9 +92,7 @@ class FoodDataConnect {
     });
 
     const response = await foodResponse.json();
-
-    console.log(response);
-
+    
     // return response from website in JSON format
     return {
       response

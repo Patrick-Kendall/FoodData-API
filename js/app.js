@@ -9,8 +9,8 @@ const state = new State;
 // instance of UI which prints html to two divs in index.html
 const ui = new UI(state);
 
-const data = new DataController(state);
+const dataControl = new DataController(state);
 
 ui.createSearchUser();
-
-// check if input is empty
+ui.createRelatedSearch();
+ui.createCompare();

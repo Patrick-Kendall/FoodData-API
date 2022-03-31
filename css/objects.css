@@ -99,6 +99,12 @@
     font-size: 1em;
 }
 
+/* Input Bar */
+.input {
+    display: flex;
+    flex-direction: row;
+}
+
 /* Search Input Field */
 
 .search-control {
@@ -117,10 +123,9 @@
 /* Serving Control Input Field */
 
 .serving-control {
-    float: right;
     display: block; 
     text-align: left;
-    width: 50px;
+    min-width: 60px;
     color:blanchedalmond;
     padding:6px;
     font-size: 1.2em;

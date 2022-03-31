@@ -1,6 +1,7 @@
 class UI {
   constructor(appState) {
     this.nutrient_tab = document.getElementById("nutrient-tab");
+    this.compare_tab = document.getElementById("compare-tab");
     this.related = document.getElementById("related");
     this.profile = document.getElementById("profile");
     this.appState = appState;
@@ -10,165 +11,53 @@ class UI {
   createSearchUser() {
     
 // getting user input from webpage
-const searchUser = document.getElementById('searchUser');
+  const searchUser = document.getElementById('searchUser');
 
   searchUser.addEventListener('keypress', (e) => {
   // Get input text
-  let userText = e.target.value;
-
-  // check state
-  const appState = state.getState();
-
+  const userText = e.target.value;
 
   const key = e.code;
 
   if (key == 'Enter') {
-    switch(appState) {
-      case 0:
-        if (userText !== ''){
-          api.searchSurvey(userText)
-          .then(surveyData =>
-            {
-              data.clear();
-              data.processNutrition(surveyData.response);
-              ui.showNutrition();
-              data.processRelatedBrands(surveyData.response);
-              ui.showRelatedSearches();
-            })
-        }
-        break;
-      case 1:
-        if(userText !== '') {
-          // 
-          api.searchBrand(userText)
-          .then(brandData => {
-            api.searchSurvey(userText)
-            .then(surveyData =>
-              {
-                data.clear();
-                data.processNutrition(brandData.response);
-                ui.showNutrition();
-                data.processRelatedBrands(surveyData.response);
-                ui.showRelatedSearches();
-              })
-          })
-        }
-        break;
-      case 2:
-        api.searchAll(userText)
-        .then(allData =>
-          {
-            data.clear();
-            data.processNutrition(allData.response);
-            ui.showNutrition();
-            data.processRelatedBrands(allData.response);
-            ui.showRelatedSearches();
-          })
-        break;
-      case 3:
-        api.searchFoundational(userText)
-        .then(foundationData =>
-          {
-            data.clear();
-            data.processNutrition(foundationData.response);
-            ui.showNutrition();
-            data.processRelatedBrands(foundationData.response);
-            ui.showRelatedSearches();
-          })
-        break;
-      default:
-        break;
-    }
+    dataControl.newSearch(userText);
   }
 })
   }
 
   // establish event listener on related search's inner HTML
-  createSimilarSearch() {
+  createRelatedSearch() {
     // enabling link to new, related searches
     let sim = document.getElementById("related");
     sim.addEventListener('click',(e) => 
     {
       let userText = e.target.innerHTML;
 
-      // convert % to URL encoded "%26"
-      userText = userText.split("%").join("%26");
+      // convert % to URL encoded "%25"
+      userText = userText.split("%").join("%25");
       userText = userText.split("\"").join("");
 
-      const searchType = this.appState.getState();
+      dataControl.newSearch(userText);
+    })
+  }
 
+  // event listener for compare
+  createCompare() {
+    const comp = document.getElementById('related');
+    comp.addEventListener('click',(e) => 
+    {
+      //e.preventDefault();
+      // e.shiftKey returns true or false
+      let shift = e.shiftKey;
 
-      switch(searchType) {
-        case 0:
-          api.searchSurvey(userText)
-          .then(surveyData =>
-            {
-              // change user input text to similar search term
-              let targ = document.getElementById("searchUser");
-              targ.value = surveyData.response.foods[0].description;
-    
-              //update UI
-              data.clear();
-              data.processNutrition(surveyData.response);
-              ui.showNutrition();
-              data.processRelatedBrands(surveyData.response);
-              ui.showRelatedSearches();
-            })
-          break;
-        case 1:
-          api.searchBrand(userText)
-          .then(brandData => {
-            api.searchSurvey(userText)
-            .then(surveyData =>
-              {
-              // change user input text to similar search term
-              let targ = document.getElementById("searchUser");
-              targ.value = brandData.response.foods[0].description;
-    
-              //update UI
-              data.clear();
-              data.processNutrition(brandData.response);
-              ui.showNutrition();
-              data.processRelatedBrands(surveyData.response);
-              ui.showRelatedSearches();
-            })
-          })
-          break;
-        case 2:
-          api.searchAll(userText)
-          .then(allData =>
-            {
-              // change user input text to similar search term
-              let targ = document.getElementById("searchUser");
-              targ.value = allData.response.foods[0].description;
-    
-              //update UI
-              data.clear();
-              data.processNutrition(allData.response);
-              ui.showNutrition();
-              data.processRelatedBrands(allData.response);
-              ui.showRelatedSearches();
-            })
-          break;
-        case 3:
-          api.searchFoundational(userText)
-          .then(foundationData =>
-            {
-              // change user input text to similar search term
-              let targ = document.getElementById("searchUser");
-              targ.value = foundationData.response.foods[0].description;
-    
-              //update UI
-              data.clear();
-              data.processNutrition(foundationData.response);
-              ui.showNutrition();
-              data.processRelatedBrands(foundationData.response);
-              ui.showRelatedSearches();
-            })
-          break;
-        default:
-          break;
+      if (shift) {
+        //const title = e.target.innerHTML;
+
+        
+        this.showCompare();
+
       }
+
     })
   }
 
@@ -179,12 +68,10 @@ const searchUser = document.getElementById('searchUser');
     <div class = "relatedList">
     <h4> Related Searches </h4>
     <ul id="related">
-      <a href="#">${data.relatedBrandsList}</a>
+      <a href="javascript:void(0)">${dataControl.relatedBrandsList}</a>
     </ul>
     </div>
     `;
-
-    this.createSimilarSearch();
 
   }
 
@@ -197,21 +84,21 @@ const searchUser = document.getElementById('searchUser');
        this.nutrient_tab.innerHTML = `
        <div class="nutrient-container">
 
-       <h4 class="nutrient-header" id="nutrient-header"> ${data.foodOne.description} : <span id="serving-value">${state.serving}</span>g Serving<br>
+       <h4 class="nutrient-header" id="nutrient-header"> ${dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].description} : <span id="serving-value">${state.serving}</span>g Serving<br>
        </h4>
        <div class="nutrient-row">
          <div class="nutrient-col">
            <table class="nutrient-table">
            <tr>
-              <th class = "nutrient-table-header">Macro: </th>
+              <th class = "nutrient-table-header">Macronutrients: </th>
            </tr>
-           ${data.majorDataTable}
+           ${dataControl.majorDataTable}
            </table>
            <hr class="nutrient-total-line">
            <table class="nutrient-table">
            <tr class = "nutrient-table-row"> 
              <td>calories:</td>
-             <td class="nutrient-table-units"> ${data.nutrients.energy.weight} </td>
+             <td class="nutrient-table-units"> ${dataControl.appData.nutrients.energy.weight} </td>
            </tr>
            </table>
          </div>
@@ -220,7 +107,7 @@ const searchUser = document.getElementById('searchUser');
            <tr>
              <th class = "nutrient-table-header">Minerals: </th>
            </tr>
-           ${data.mineralDataTable}
+           ${dataControl.mineralDataTable}
            </table>
          </div>
          <div class="nutrient-col">
@@ -228,7 +115,7 @@ const searchUser = document.getElementById('searchUser');
              <tr>
                <th class = "nutrient-table-header">Vitamins: </th>
              </tr>
-             ${data.vitaminDataTable}
+             ${dataControl.vitaminDataTable}
            </table>
          </div>
          <div class="nutrient-frame">
@@ -243,7 +130,7 @@ const searchUser = document.getElementById('searchUser');
              <tr>
                <th class = "nutrient-table-header">Fatty Acids: </th>
              </tr>
-             ${data.fatBreakdownTable}
+             ${dataControl.fatBreakdownTable}
            </table>
          </div>
          <div class="nutrient-col nutrient-row-extended invisible">
@@ -251,7 +138,7 @@ const searchUser = document.getElementById('searchUser');
            <tr>
               <th class = "nutrient-table-header">Fatty Acids: </th>
            </tr>
-           ${data.fatBreakdown2Table}
+           ${dataControl.fatBreakdown2Table}
            </table>
          </div>
          <div class="nutrient-col nutrient-row-extended invisible">
@@ -259,7 +146,7 @@ const searchUser = document.getElementById('searchUser');
              <tr>
               <th class = "nutrient-table-header">Amino Acids: </th>
              </tr>
-             ${data.aminoAcidDataTable}
+             ${dataControl.aminoAcidDataTable}
            </table>
          </div>
        </div>
@@ -288,6 +175,37 @@ const searchUser = document.getElementById('searchUser');
      }
    }
  })
+  }
+
+  showCompare() {
+    this.compare_tab.innerHTML = `
+    <div class="nutrient-container">
+
+    <h4 class="nutrient-header" id="nutrient-header"> Compare : <span id="serving-value">${state.serving}</span>g Serving<br>
+    </h4>
+    <div class="nutrient-row">
+      <div class="nutrient-col">
+        <table class="nutrient-table">
+        <tr>
+           <th class = "nutrient-table-header">${dataControl.brandProfile.description}: </th>
+        </tr>
+        ${dataControl.majorDataTable}
+        </table>
+        <hr class="nutrient-total-line">
+        <table class="nutrient-table">
+        <tr class = "nutrient-table-row"> 
+          <td>calories:</td>
+          <td class="nutrient-table-units"> ${dataControl.appData.nutrients.energy.weight} </td>
+        </tr>
+        </table>
+      </div>
+    `;
+  }
+
+  // change user input text to similar search term
+  showNewUserText() {
+      let targ = document.getElementById("searchUser");
+      targ.value = dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].lowercaseDescription;
   }
 
 }

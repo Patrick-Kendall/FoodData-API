@@ -99,9 +99,9 @@ class HTMLController {
 
 class DataController {
   constructor(appState) {
-    this.nutrients = new nutrientData;
+    this.appData = new AppData;
     this.HTMLControl = new HTMLController;
-    //this.profile = new Profile;
+    this.brandProfile = new Profile;
     this.foodOne = {};
     this.nutrientDat = "";
     this.relatedBrandsList = "";
@@ -112,58 +112,97 @@ class DataController {
     this.fatBreakdownTable = "";
     this.fatBreakdown2Table = "";
     this.appState = appState;
+    this.allData = {};
   }
 
     // receive data from fetch; store first entry; generate html tables for each grouping of nutrient data
-  processNutrition(searchResponse) {
-      // storing data from API path in object properties
-      this.foodOne = searchResponse.foods[0];
-  
-      // load nutrient profile for first returned food match: foods[0]
-      this.nutrients.loadAll(this.foodOne.foodNutrients);
-      this.nutrients.calcTotalWeight(this.nutrients);
-  
-      console.log(this.nutrients);
-  
+  processNutrition() {
       // convert units to SI unit standards
-      this.formatUnits();
+      this.appData.formatUnits();
   
       // process nutrient profile and display in html <tr> groupings; 
-      this.majorDataTable = this.HTMLControl.genDecodeHTML_tr(this.nutrients.major);
-      this.mineralDataTable = this.HTMLControl.genDecodeHTML_tr(this.nutrients.minerals);
-      this.vitaminDataTable = this.HTMLControl.genDecodeHTML_tr(this.nutrients.vitamins);
+      this.majorDataTable = this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.major);
+      //console.log(this.appData.nutrients.major);
+      this.mineralDataTable = this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.minerals);
+      this.vitaminDataTable = this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.vitamins);
   
       // 2nd row of columns
-      this.aminoAcidDataTable = this.HTMLControl.genDecodeHTML_tr(this.nutrients.aminoAcids,7);
-      this.fatBreakdownTable = this.HTMLControl.genDecodeHTML_tr(this.nutrients.fats.sat) + '<tr> </tr>' + this.HTMLControl.genDecodeHTML_tr(this.nutrients.fats.monoUnsat);
-      this.fatBreakdown2Table = this.HTMLControl.genDecodeHTML_tr(this.nutrients.fats.polyUnsat); 
+      this.aminoAcidDataTable = this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.aminoAcids,7);
+      this.fatBreakdownTable = this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.fats.sat) + '<tr> </tr>' + this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.fats.monoUnsat);
+      this.fatBreakdown2Table = this.HTMLControl.genDecodeHTML_tr(this.appData.nutrients.fats.polyUnsat); 
   }
 
   // generate list of brands containing one of the identical keywords as the current search
-  processRelatedBrands(searchResponse) {
-    this.relatedBrandsList = this.HTMLControl.genHTML_li(searchResponse.foods);
+  processRelatedBrands() {
+    this.relatedBrandsList = this.HTMLControl.genHTML_li(this.appData.cache.full[this.appData.cache.full.length-1].foods);
   }
 
   // process profile data ( yet to be completed)
-  processProfile(searchResponse) {
-    this.brandProfile.loadAll(searchResponse);
+  processProfile() {
+
+    this.brandProfile.loadAll(this.appData.cache.all[this.appData.cache.all.length-1]);
 
     console.log(this.brandProfile);
   }
 
-  formatUnits() {
-    this.nutrients.formatUnits(this.nutrients.major);
-    this.nutrients.formatUnits(this.nutrients.fats.sat);
-    this.nutrients.formatUnits(this.nutrients.fats.monoUnsat);
-    this.nutrients.formatUnits(this.nutrients.fats.polyUnsat);
-    this.nutrients.formatUnits(this.nutrients.vitamins);
-    this.nutrients.formatUnits(this.nutrients.minerals);
-    this.nutrients.formatUnits(this.nutrients.misc);
-    this.nutrients.formatUnits(this.nutrients.aminoAcids);
+  async newSearch(userText) {
+
+    const appState = state.getState();
+    
+    switch(appState) {
+      case 0:
+        this.clear();
+        await this.appData.searchSurvey(userText);
+
+        this.process();
+        ui.showNewUserText();
+        break;
+      case 1:
+        this.clear();
+        await this.appData.searchBranded(userText);
+
+        ui.showNewUserText();
+        this.process();
+       
+        break;
+      case 2:
+        this.clear();
+        // fill data, then callback to function to process and display in ui
+        await this.appData.searchAll(userText);
+
+        this.process();
+
+        // change user input text to similar search term
+        ui.showNewUserText();
+
+
+        break;
+      case 3:
+        this.clear();
+
+        await this.appData.searchFoundation(userText);
+
+        ui.showNewUserText();
+        this.process();
+
+        break;
+      default:
+        break;
+    }
   }
 
+  process() {
+    //update UI
+    this.processNutrition();
+    ui.showNutrition();
+    this.processRelatedBrands();
+    ui.showRelatedSearches();
+    this.processProfile();
+  }
+
+
   clear() {
-    this.nutrients.clear();
+    this.appData.nutrients.clear();
     this.foodOne = {};
     this.nutrientDat = "";
     this.relatedBrands = "";

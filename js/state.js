@@ -5,7 +5,7 @@ class State {
         // 1 == Branded,
         // 2 == All: 
         // 3 == Foundational: complete nutrition info with amino acids; low variety of foodstuff
-        this.dataType = 3;
+        this.dataType = 2;
 
         this.serving = 100;
         this.dailyCalories = 2000;
