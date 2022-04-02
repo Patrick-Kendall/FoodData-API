@@ -28,36 +28,57 @@ class UI {
   // establish event listener on related search's inner HTML
   createRelatedSearch() {
     // enabling link to new, related searches
-    let sim = document.getElementById("related");
-    sim.addEventListener('click',(e) => 
-    {
-      let userText = e.target.innerHTML;
-
-      // convert % to URL encoded "%25"
-      userText = userText.split("%").join("%25");
-      userText = userText.split("\"").join("");
-
-      dataControl.newSearch(userText);
-    })
+    let sim = document.querySelectorAll(".related__title");
+    sim.forEach(el => 
+      {
+        el.addEventListener('click',(e) => 
+        {
+          let userText = e.target.innerHTML;
+    
+          // convert % to URL encoded "%25"
+          userText = userText.split("%").join("%25");
+          userText = userText.split("\"").join("");
+    
+          dataControl.newSearch(userText);
+        })
+      })
   }
 
   // event listener for compare
   createCompare() {
-    const comp = document.getElementById('related');
-    comp.addEventListener('click',(e) => 
-    {
-      //e.preventDefault();
-      // e.shiftKey returns true or false
-      let shift = e.shiftKey;
-
-      if (shift) {
-        //const title = e.target.innerHTML;
-
+    const comp = document.querySelectorAll('.compare');
+    comp.forEach(el => {
+      el.addEventListener('change',async (e) => 
+      {
+         console.log('hi');
+         if (e.target.checked) {
+          compareControl.clearTable();
+          //const title = e.target.innerHTML;
+          await compareControl.addFood(e.target.getAttribute("id"));
+          
+          this.showCompare();
+  
+          this.createRemoveComp();
+  
         
+         }
+      })
+    })
+  }
+
+  createRemoveComp() {
+    const compItems = document.querySelectorAll('.remove-btn');
+    compItems.forEach(el => {
+      el.addEventListener('click', (e) =>
+      {
+        let id = e.target.getAttribute("id");
+
+        compareControl.removeFood(id);
+
+
         this.showCompare();
-
-      }
-
+        this.createRemoveComp();
+      })
     })
   }
 
@@ -68,11 +89,12 @@ class UI {
     <div class = "relatedList">
     <h4> Related Searches </h4>
     <ul id="related">
-      <a href="javascript:void(0)">${dataControl.relatedBrandsList}</a>
+      ${dataControl.relatedBrandsList}
     </ul>
     </div>
     `;
-
+    this.createRelatedSearch();
+    this.createCompare();
   }
 
   // printing to an html div with id "profile"
@@ -84,7 +106,7 @@ class UI {
        this.nutrient_tab.innerHTML = `
        <div class="nutrient-container">
 
-       <h4 class="nutrient-header" id="nutrient-header"> ${dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].description} : <span id="serving-value">${state.serving}</span>g Serving<br>
+       <h4 class="nutrient-header" id="nutrient-header"> ${dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].lowercaseDescription} : <span id="serving-value">${state.serving}</span>g Serving<br>
        </h4>
        <div class="nutrient-row">
          <div class="nutrient-col">
@@ -178,34 +200,57 @@ class UI {
   }
 
   showCompare() {
+    if (compareControl.compareLength == 0) {
+      return
+    }
+
     this.compare_tab.innerHTML = `
     <div class="nutrient-container">
 
     <h4 class="nutrient-header" id="nutrient-header"> Compare : <span id="serving-value">${state.serving}</span>g Serving<br>
     </h4>
     <div class="nutrient-row">
-      <div class="nutrient-col">
-        <table class="nutrient-table">
-        <tr>
-           <th class = "nutrient-table-header">${dataControl.brandProfile.description}: </th>
-        </tr>
-        ${dataControl.majorDataTable}
-        </table>
-        <hr class="nutrient-total-line">
-        <table class="nutrient-table">
-        <tr class = "nutrient-table-row"> 
-          <td>calories:</td>
-          <td class="nutrient-table-units"> ${dataControl.appData.nutrients.energy.weight} </td>
-        </tr>
-        </table>
-      </div>
+      ${compareControl.compareTable}
+    </div>
     `;
+  }
+
+  clearCompare() {
+    this.compare_tab.innerHTML = ``;
   }
 
   // change user input text to similar search term
   showNewUserText() {
       let targ = document.getElementById("searchUser");
       targ.value = dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].lowercaseDescription;
+  }
+
+  newPieChart() {
+    
+const ctx = document.getElementById("myChart").getContext("2d");
+const myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Protein','Fat','Water','Carbs'],
+        datasets: [{
+            label: 'Food',
+            data: [22,28,34,57],
+            backgroundColor: [
+                'rgba(255,33,33,0.62)',
+                'rgba(33,192,33,0.62)',
+                'rgba(33,33,235,0.62)',
+                'rgba(255,255,33,0.62)'
+            ],
+            borderColor: [
+                'rgba(255,33,33,1)',
+                'rgba(33,192,33,1)',
+                'rgba(33,33,235,1)',
+                'rgba(255,255,33,1)'
+            ],
+            borderWidth: 2
+        }]
+    }
+})
   }
 
 }

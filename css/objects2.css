@@ -31,14 +31,16 @@
 .nutrient-col {
   background-color: rgb(24, 20, 20);
   border: 1px black solid;
-  color:blanchedalmond;
-  padding: 0.6em;
+  color: blanchedalmond;
+  padding: 0.45em;
   margin: 1px;
   min-width: 10.4em;
+  max-width: 12em;
   width:auto;
   height: 20em;
   box-shadow: 1px 2px 2px black;
   overflow: auto;
+  position: relative;
 }
 
 .nutrient-frame {
@@ -75,6 +77,10 @@
 
 .nutrient-table-units {
     text-align: right;
+    width: 4em;
+}
+.nutrient-table-label {
+    width: 6em;
 }
 
 .nutrient-caption {
@@ -91,7 +97,18 @@
 #related {
     cursor:pointer;
     color: blanchedalmond;
-    text-decoration: none;
+    text-decoration: dashed;
+    list-style-type: none;
+    padding:0;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+}
+
+.related__entry {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 4px;
+    align-items: center;
 }
 
 .relatedList {
@@ -150,3 +167,41 @@
 .current-choice {
     display: inline;
 }
+
+
+/* Compare Table */
+
+.remove-btn {
+    background-color: blanchedalmond;
+    color: black;
+    border-radius: 100px;
+    padding: 0.8rem;
+    text-align: center;
+    position: absolute;
+    bottom:0;
+    left: 0;
+    right: 0;
+    margin: 1rem;
+
+}
+
+.col-title {
+    color: blanchedalmond;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+    overflow: hidden;
+    width: 11em;
+}
+
+.compare-col {
+    background-color: rgb(24, 20, 20);
+    border: 1px black solid;
+    color: blanchedalmond;
+    padding: 0.45em;
+    margin: 1px;
+    width: 11em;
+    height: 20em;
+    box-shadow: 1px 2px 2px black;
+    overflow: auto;
+    position: relative;
+  }

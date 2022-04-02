@@ -23,7 +23,7 @@ class nutrientElement extends Object {
     }
 }
 
-// structure to organize food nutrient data
+// structure to organize food nutrient data (model class)
 class nutrientData {
     constructor() {
 
@@ -740,18 +740,12 @@ class nutrientData {
 
 }
 
-class compareData {
-    
-}
-
+// overriding class which manages models, cached data, and contacts the FoodCentral API
 class AppData {
     constructor() {
 
-        // caching past searches; "full" stores the full response with 50 food entries; the rest store a single food entry
+        // caching past searches; "full" stores the full response with 50 food entries; "all" stores single food entries
         this.cache = {
-            "survey" : [],
-            "branded" : [],
-            "foundation" : [],
             "all" : [],
             "full" : []
         };
@@ -762,26 +756,26 @@ class AppData {
 
     // fetch data from Survey branch of API; add 0 entry to cache; load top of cache into nutrient object
     async searchSurvey(userText) {
-        api.searchSurvey(userText)
+        await this.api.searchSurvey(userText)
         .then(surveyData => 
             {
                 // add 0 entry to cache
                 this.cache.full.push(surveyData.response);
-                this.cache.survey.push(surveyData.response.foods[0]);
+                this.cache.all.push(surveyData.response.foods[0]);
 
 
-                this.nutrients.loadAll(surveyData[0].response.foods[0].foodNutrients);
+                this.nutrients.loadAll(surveyData.response.foods[0].foodNutrients);
                 this.nutrients.calcTotalWeight(this.nutrients);
             })
     }
 
     async searchBranded(userText) {
-        api.searchBrand(userText)
+        await this.api.searchBrand(userText)
         .then(brandData => {
             this.cache.full.push(brandData.response);
-            this.cache.brand.push(brandData.response.foods[0]);
+            this.cache.all.push(brandData.response.foods[0]);
 
-            this.nutrients.loadAll(brandData[0].response.foods[0].foodNutrients);
+            this.nutrients.loadAll(brandData.response.foods[0].foodNutrients);
             this.nutrients.calcTotalWeight(this.nutrients);
         })
     }
@@ -789,25 +783,25 @@ class AppData {
     async searchAll(userText) {
         await this.api.searchAll(userText)
         .then(allData => {
-
-
+            
             this.cache.full.push(allData.response);
             this.cache.all.push(allData.response.foods[0]);
 
             this.nutrients.loadAll(allData.response.foods[0].foodNutrients);
             this.nutrients.calcTotalWeight(this.nutrients);
 
-            console.log(this.nutrients);
         })
         
     }
 
     async searchFoundation(userText) {
-        api.searchFoundational(userText)
+        await this.api.searchFoundational(userText)
         .then(foundationData => {
-            this.cache.foundation.push(foundationData[0]);
 
-            this.nutrients.loadAll(foundationData[0].response.foods[0].foodNutrients);
+            this.cache.full.push(foundationData.response);
+            this.cache.all.push(foundationData.response.foods[0]);
+
+            this.nutrients.loadAll(foundationData.response.foods[0].foodNutrients);
             this.nutrients.calcTotalWeight(this.nutrients);
 
         })
@@ -826,10 +820,36 @@ class AppData {
 
     clear() {
         this.cache = {
-            "survey" : [],
-            "branded" : [],
-            "foundation" : [],
-            "all" : []
+            "all" : [],
+            "full" : []
         };
+    }
+}
+
+
+class compareData extends AppData {
+    constructor() {
+        super();
+        this.queue = [];
+        this.titlesQueue = [];
+        this.column = [];
+    }
+
+    addItem(data) {
+        this.queue.push(data);
+    }
+
+    addTitle(title) {
+        this.titlesQueue.push(title);
+    }
+
+    addColumn(table) {
+        this.column.push(table);
+    }
+
+    removeItem(index) {
+        this.queue.splice(index,1);
+        this.titlesQueue.splice(index,1);
+        this.column.splice(index,1);
     }
 }
