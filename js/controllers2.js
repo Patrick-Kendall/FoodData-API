@@ -17,8 +17,7 @@ class HTMLController {
         <li class="related__entry">
           <a href="javascript:void(0)" class="related__title">${el}</a> 
           <div>
-            <input class="compare" type="checkbox" id="${el}" style="transform:scale(1.5);"></input>
-            Compare
+            <btn class="compare__btn btn" id="${el}">Compare</btn>
           </div>
         </li>
         `
@@ -76,8 +75,6 @@ class HTMLController {
     genDecodeHTML_column(dataTable,calories) {
       let result = ``;
 
-      console.log(dataTable);
-
       result += `
       <div class="col-wrapper">
         <div class="compare-col">
@@ -102,20 +99,60 @@ class HTMLController {
     }
 
     // data is expected input array of "15g" ... 
-    genDecodeHTML_row(title,data) {
+    genDecodeHTML_row2(identifier,title,data) {
       let result = ``;
 
       result += `
       <tr>
-        <td class="compareTable__title"> ${title} </td>`;
+        <td class="${identifier}Table__title"><div class="square square-${title}" ></div> ${title} </td>`;
 
       data.forEach(el => {
-        result += `${el}`;
+        result += `<td class="${identifier}Table__element"> ${el}g </td>`;
       })
 
-      
+      result += `</tr>`
+
+      return result
+    }
+
+    genDecodeHTML_row(identifier,title,data) {
+      let result = ``;
+
+      result += `
+      <tr>
+        <td class="${identifier}Table__title"> ${title} </td>`;
+
+      data.forEach(el => {
+        result += `<td class="${identifier}Table__element"> ${el} </td>`;
+      })
+
+      result += `</tr>`
+
+      return result
     }
     
+    // generate canvas with inputted id
+    genCanvas(index) {
+      let result = ``;
+      
+      result += `
+      <canvas id="pie${index}" class="pie" width="150px" height="90"></canvas>
+      `;
+
+      return result
+    }
+
+    genPieChart(index) {
+      let result = `
+      <div class="pie-container"> 
+        `;
+
+      result += this.genCanvas(index);
+
+      result += `</div>`;
+
+      return result
+    }
     // html table rows with limited number of rows
     genLimitedHTML_tr(data,limit) {
       let result = ``;
@@ -144,6 +181,7 @@ class HTMLController {
       return result
     }
 
+    
 }
 
 class DataController {
@@ -293,41 +331,96 @@ class CompareController {
     this.compareLength = 0;
     this.HTMLControl = new HTMLController;
     this.compareTable = "";
+    this.titlesQueue = "";
+    this.pieQueue = "";
+    this.removeQueue = "";
     this.proteinRow = "";
     this.fatRow = "";
     this.carbRow = "";
     this.waterRow = "";
     this.calRow = "";
+    this.proArray = [];
+    this.fatArray = [];
+    this.carbArray = [];
+    this.waterArray = [];
+    this.calArray = [];
   }
+  
+  async processQueue() {
+
+    const queue = this.data.queue;
+    console.log(queue);
+
+    queue.forEach(el => 
+      {
+        this.data.nutrients.loadAll(el.foodNutrients);
+        this.data.formatUnits();
+
+        if (this.data.nutrients.major.protein.weight == 0) {
+          this.proArray.push("0");
+        } else {
+          this.proArray.push(this.data.nutrients.major.protein.weight);
+        };
+  
+        if (this.data.nutrients.major.fat.weight == 0) {
+          this.fatArray.push("0");
+        } else {
+          this.fatArray.push(this.data.nutrients.major.fat.weight);
+        };
+    
+        if (this.data.nutrients.major.carb.weight == 0) {
+          this.carbArray.push("0");
+        } else {
+          this.carbArray.push(this.data.nutrients.major.carb.weight);
+        };
+        
+        if (this.data.nutrients.major.water.weight == 0) {
+          this.waterArray.push("0");
+        } else {
+          this.waterArray.push(this.data.nutrients.major.water.weight);
+        };
+
+        if (this.data.nutrients.energy.weight == 0) {
+          this.calArray.push(0);
+        } else {
+          this.calArray.push(this.data.nutrients.energy.weight);
+        };
+      });
 
 
+    return
+  }
+  
   async addFood(title) {
     this.compareLength++;
 
     this.data.addTitle(title);
     await this.newSearch(title);
     this.data.formatUnits();
-    
 
     this.data.addItem(this.data.cache.all[this.data.cache.all.length-1]);
 
-    this.processMajor();
+    await this.processQueue();
 
-    this.data.addColumn(this.HTMLControl.genDecodeHTML_column(this.majorDataTable,this.data.nutrients.energy.weight));
-
-    console.log(this.data.column[0]);
-
-    this.updateTable();
-
+    this.createCompare();
   }
 
-  removeFood(index) {
+  async removeFood(index) {
     this.compareLength--;
     //console.log(this.compareLength);
 
     this.data.removeItem(index);
 
-    this.updateTable();
+    this.clear();
+    ui.clearCompare();
+
+    await this.processQueue();
+
+    this.createCompare();
+
+    console.log(this.titlesQueue);
+
+    ui.showCompare();
 
 
   }
@@ -368,32 +461,145 @@ class CompareController {
     }
   }
 
-  processMajor() {
-    this.majorDataTable = this.HTMLControl.genDecodeHTML_tr(this.data.nutrients.major);
+  // inputs arrays created in processQueue()
+  createTable() {
+    let result =  `<table class="compare__table">`;
+
+    result += this.HTMLControl.genDecodeHTML_row2('compare','Protein',this.proArray);
+    result += this.HTMLControl.genDecodeHTML_row2('compare','Fat',this.fatArray);
+    result += this.HTMLControl.genDecodeHTML_row2('compare','Carbs',this.carbArray);
+    result += this.HTMLControl.genDecodeHTML_row2('compare','Water',this.waterArray);
+
+    result += `</table>`
+
+    this.compareTable = result;
   }
 
-  updateTable() {
+  createCompare() {
+    
+    this.createTable();
+
+    this.createPieQueue();
+    
+
+    
+    this.createTitles();
+
+    this.createRemove();
+
+  }
+
+  createTitles() {
+    let result = `<table class="title__table">`;
+
+    result += this.HTMLControl.genDecodeHTML_row('title','',this.data.titlesQueue);
+
+    result += `</table`;
+
+    this.titlesQueue = result;
+  }
+
+  createRemove() {
+    let result = "";
+    let index = 0;
+
+    this.data.queue.forEach(() => {
+      result += `<div class="remove__container"> <btn class="remove__btn btn" id="${index}">Remove </btn></div>`;
+      index++;
+    })
+
+    this.removeQueue = result;
+  }
+
+  createPieQueue() {
     let index = 0;
     if (this.compareLength == 0) {
-      this.compareTable = "";
-      ui.clearCompare();
+      this.pieQueue = "";
+
 
     } else {
-      this.compareTable = "";
+      this.pieQueue = "";
       this.data.queue.forEach( () => {
-        this.compareTable += this.data.column[index];
-        this.compareTable += `
-          <a href="javascript:void(0)" class="remove-btn btn" id="${index}"> Remove </a>
-        </div>
-        <h5 class="col-title"> ${this.data.titlesQueue[index]} </h5>
-        </div>
-        `
+        this.pieQueue += this.HTMLControl.genPieChart(index);
         index++;
       })
     }
   }
 
-  clearTable() {
-    this.compareTable = "";
+  updatePieQueue() {
+    let index = 0;
+    if (this.compareLength == 0) {
+      this.pieQueue = "";
+
+
+    } else {
+      this.data.queue.forEach( (el) => {
+        this.data.nutrients.loadAll(el.foodNutrients);
+        this.newPieChart(index);
+        index++;
+      })
+    }
   }
+
+  clear() {
+    this.data.nutrients.clear();
+    this.compareTable = "";
+    this.titlesQueue = "";
+    this.pieQueue = "";
+    this.removeQueue = "";
+    this.proteinRow = "";
+    this.fatRow = "";
+    this.carbRow = "";
+    this.waterRow = "";
+    this.calRow = "";
+    this.proArray = [];
+    this.fatArray = [];
+    this.carbArray = [];
+    this.waterArray = [];
+    this.calArray = [];
+  }
+  
+  newPieChart(index) {
+
+    const ctx = document.getElementById(`pie${index}`).getContext("2d");
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Protein','Fat','Water','Carbs'],
+            datasets: [{
+                label: 'Food',
+                data: [this.data.nutrients.major.protein.weight,this.data.nutrients.major.fat.weight,this.data.nutrients.major.water.weight,this.data.nutrients.major.carb.weight],
+                backgroundColor: [
+                    'rgba(253, 6, 6,0.8)',
+                    'rgba(255,255,33,1)',
+                    'rgba(33,33,235,0.5)',
+                    'rgba(255, 255, 255,1)'
+                ],
+                borderColor: [
+                    'rgba(253, 6, 6,1)',
+                    'rgba(255,255,33,1)',
+                    'rgba(33,33,235,1)',
+                    'rgba(255, 255, 255,1)'
+                ],
+                borderWidth: 1
+            }]
+          },
+        options: {
+          plugins: {
+            title: {
+              display: false,
+              text: this.data.titlesQueue[index],
+              font: {
+                size: 18
+              }
+            },
+            legend: {
+              display: false,
+              
+            }
+          }
+        }
+    });
+
+      }
 }

@@ -1,9 +1,15 @@
+* {
+
+    
+}
+
 body {
     font-size: 0.96em;
     padding: 0px;
     margin: 1.25em;
     background-color: rgb(37, 37, 33);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 .content {

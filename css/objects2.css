@@ -109,6 +109,11 @@
     grid-template-columns: 1fr 1fr;
     padding-top: 4px;
     align-items: center;
+    margin: 20px;
+}
+
+.related__title {
+    font-size: 1.2rem;
 }
 
 .relatedList {
@@ -182,7 +187,28 @@
     left: 0;
     right: 0;
     margin: 1rem;
+}
 
+.btn {
+    background-color: blanchedalmond;
+    color: black;
+    border-radius: 100px;
+    text-align: center;
+    display: inline-block;
+    margin: 0;
+}
+
+.compare__btn:hover {
+    transform: translateY(-2px);
+}
+
+.compare__btn:active {
+    transform: translateY(-1px);
+}
+
+.compare__btn {
+    padding: 4px 1em;
+    font-size: 1.2rem;
 }
 
 .col-title {
@@ -205,3 +231,125 @@
     overflow: auto;
     position: relative;
   }
+
+.compare__table {
+    /* background-color: rgba(87, 88, 88, 0.671); */
+    border-collapse: collapse;
+    font-size: 1.45rem;
+    color: blanchedalmond;
+    overflow-x: none;
+    width: auto;
+}
+
+.compareTable__element {
+    min-width: 150px;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1.2px solid rgba(255, 235, 205, 0.397);
+    text-align:center;
+}
+
+.compareTable__title {
+    min-width: 100px;
+    border-bottom: 1.2px solid rgba(255, 235, 205, 0.39);
+
+}
+
+.pie-queue {
+    margin-left: 100px;
+    padding-bottom: 1em;
+
+}
+
+.pie-container {
+    max-width:150px;
+    display: inline-block;
+}
+
+.pie {
+    transform: scale(0.86);
+    color: rgb(253, 6, 6);
+}
+
+.compare-container {
+    overflow-x: auto;
+    display: table;
+    margin-bottom: 2rem;
+}
+
+.title__table {
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1rem;
+    color: blanchedalmond;
+    width: auto;
+    word-wrap: wrap;
+}
+
+.titleTable__title {
+    min-width: 100px;
+    padding-bottom: 5em;
+}
+
+.square {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+}
+
+.square-Protein {
+    background-color: rgba(253, 6, 6,0.8) ;
+}
+
+.square-Fat {
+    background-color: rgba(255,255,33,1) ;
+}
+
+.square-Water {
+    background-color: rgba(33,33,235,0.5) ;
+}
+
+.square-Carbs {
+    background-color: rgba(255, 255, 255,1);
+}
+
+.titleTable__element {
+    min-width: 150px;
+    width: 150px;
+    padding: 0;
+    margin: 0;
+}
+
+.remove__btn {
+    padding: 4px 1em;
+    margin: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.remove__container {
+    display: inline;
+    width: 150px;
+    position: relative;
+
+}
+
+.remove__container::after {
+    content: "";
+    clear:both;
+    display: table;
+}
+
+.remove-queue {
+    margin-left: 100px;
+    display: flex;
+    margin-top: 1rem;
+    
+}

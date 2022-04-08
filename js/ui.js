@@ -2,6 +2,9 @@ class UI {
   constructor(appState) {
     this.nutrient_tab = document.getElementById("nutrient-tab");
     this.compare_tab = document.getElementById("compare-tab");
+    this.pieQueue = document.getElementById("pie-Q");
+    this.titleQueue = document.getElementById("title-Q");
+    this.removeQueue = document.getElementById("remove-Q");
     this.related = document.getElementById("related");
     this.profile = document.getElementById("profile");
     this.appState = appState;
@@ -46,37 +49,43 @@ class UI {
 
   // event listener for compare
   createCompare() {
-    const comp = document.querySelectorAll('.compare');
+    const comp = document.querySelectorAll('.compare__btn');
     comp.forEach(el => {
-      el.addEventListener('change',async (e) => 
+      el.addEventListener('click',async (e) => 
       {
-         console.log('hi');
-         if (e.target.checked) {
-          compareControl.clearTable();
+
+          compareControl.clear();
           //const title = e.target.innerHTML;
           await compareControl.addFood(e.target.getAttribute("id"));
           
           this.showCompare();
+
+          console.log(compareControl.data.queue[0])
+
+
+          compareControl.updatePieQueue();
   
           this.createRemoveComp();
   
         
-         }
       })
     })
   }
 
   createRemoveComp() {
-    const compItems = document.querySelectorAll('.remove-btn');
+    const compItems = document.querySelectorAll('.remove__btn');
     compItems.forEach(el => {
-      el.addEventListener('click', (e) =>
+      el.addEventListener('click', async (e) =>
       {
         let id = e.target.getAttribute("id");
 
-        compareControl.removeFood(id);
+        await compareControl.removeFood(id);
 
 
         this.showCompare();
+
+        compareControl.updatePieQueue();
+
         this.createRemoveComp();
       })
     })
@@ -199,24 +208,69 @@ class UI {
  })
   }
 
-  showCompare() {
+  showPieQueue() {
+    if (compareControl.compareLength == 0) {
+      return
+    }
+
+
+    this.pieQueue.innerHTML = `
+
+      ${compareControl.pieQueue}
+
+    `;
+  }
+
+  showTitles() {
+    if (compareControl.compareLength == 0) {
+      return
+    }
+
+
+    this.titleQueue.innerHTML = `
+
+      ${compareControl.titlesQueue}
+
+    `;
+  }
+
+  showRemove() {
+    if (compareControl.compareLength == 0) {
+      return
+    }
+
+    this.removeQueue.innerHTML = `
+    ${compareControl.removeQueue}`;
+  }
+
+  showTable() {
     if (compareControl.compareLength == 0) {
       return
     }
 
     this.compare_tab.innerHTML = `
-    <div class="nutrient-container">
 
-    <h4 class="nutrient-header" id="nutrient-header"> Compare : <span id="serving-value">${state.serving}</span>g Serving<br>
-    </h4>
-    <div class="nutrient-row">
       ${compareControl.compareTable}
-    </div>
+
     `;
   }
 
+  showCompare() {
+    this.showTable();
+
+    this.showPieQueue();
+
+    this.showTitles();
+
+    this.showRemove();
+
+  }
+
   clearCompare() {
+    this.pieQueue.innerHTML = ``;
     this.compare_tab.innerHTML = ``;
+    this.titleQueue.innerHTML = ``;
+    this.removeQueue.innerHTML = ``;
   }
 
   // change user input text to similar search term
@@ -225,33 +279,6 @@ class UI {
       targ.value = dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].lowercaseDescription;
   }
 
-  newPieChart() {
-    
-const ctx = document.getElementById("myChart").getContext("2d");
-const myChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['Protein','Fat','Water','Carbs'],
-        datasets: [{
-            label: 'Food',
-            data: [22,28,34,57],
-            backgroundColor: [
-                'rgba(255,33,33,0.62)',
-                'rgba(33,192,33,0.62)',
-                'rgba(33,33,235,0.62)',
-                'rgba(255,255,33,0.62)'
-            ],
-            borderColor: [
-                'rgba(255,33,33,1)',
-                'rgba(33,192,33,1)',
-                'rgba(33,33,235,1)',
-                'rgba(255,255,33,1)'
-            ],
-            borderWidth: 2
-        }]
-    }
-})
-  }
 
 }
 

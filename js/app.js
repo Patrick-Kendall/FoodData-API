@@ -14,4 +14,3 @@ const compareControl = new CompareController;
 ui.createSearchUser();
 ui.createRelatedSearch();
 ui.createCompare();
-

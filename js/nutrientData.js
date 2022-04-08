@@ -832,9 +832,9 @@ class compareData extends AppData {
         super();
         this.queue = [];
         this.titlesQueue = [];
-        this.column = [];
     }
 
+    // add a cache.all entry to the queue (full food[0] entry)
     addItem(data) {
         this.queue.push(data);
     }
@@ -850,6 +850,5 @@ class compareData extends AppData {
     removeItem(index) {
         this.queue.splice(index,1);
         this.titlesQueue.splice(index,1);
-        this.column.splice(index,1);
     }
 }
