@@ -10,143 +10,60 @@ class UI {
     this.appState = appState;
   }
 
-  // establish event listener on search input
-  createSearchUser() {
-    
-// getting user input from webpage
-  const searchUser = document.getElementById('searchUser');
-
-  searchUser.addEventListener('keypress', (e) => {
-  // Get input text
-  const userText = e.target.value;
-
-  const key = e.code;
-
-  if (key == 'Enter') {
-    dataControl.newSearch(userText);
-  }
-})
-  }
-
-  // establish event listener on related search's inner HTML
-  createRelatedSearch() {
-    // enabling link to new, related searches
-    let sim = document.querySelectorAll(".related__title");
-    sim.forEach(el => 
-      {
-        el.addEventListener('click',(e) => 
-        {
-          let userText = e.target.innerHTML;
-    
-          // convert % to URL encoded "%25"
-          userText = userText.split("%").join("%25");
-          userText = userText.split("\"").join("");
-    
-          dataControl.newSearch(userText);
-        })
-      })
-  }
-
-  // event listener for compare
-  createCompare() {
-    const comp = document.querySelectorAll('.compare__btn');
-    comp.forEach(el => {
-      el.addEventListener('click',async (e) => 
-      {
-
-          compareControl.clear();
-          //const title = e.target.innerHTML;
-          await compareControl.addFood(e.target.getAttribute("id"));
-          
-          this.showCompare();
-
-          console.log(compareControl.data.queue[0])
-
-
-          compareControl.updatePieQueue();
-  
-          this.createRemoveComp();
-  
-        
-      })
-    })
-  }
-
-  createRemoveComp() {
-    const compItems = document.querySelectorAll('.remove__btn');
-    compItems.forEach(el => {
-      el.addEventListener('click', async (e) =>
-      {
-        let id = e.target.getAttribute("id");
-
-        await compareControl.removeFood(id);
-
-
-        this.showCompare();
-
-        compareControl.updatePieQueue();
-
-        this.createRemoveComp();
-      })
-    })
-  }
-
   // printing to an html div with id "related"
-  showRelatedSearches() {
+  showRelatedSearches(relatedBrandsList) {
     // printing to htlm div : related
     this.related.innerHTML = `
     <div class = "relatedList">
     <h4> Related Searches </h4>
     <ul id="related">
-      ${dataControl.relatedBrandsList}
+      ${relatedBrandsList}
     </ul>
     </div>
     `;
-    this.createRelatedSearch();
-    this.createCompare();
-  }
-
-  // printing to an html div with id "profile"
-  showProfile() {
   }
 
   // printing to an html div with id="nutrient-tab"
-  showNutrition() {
-       this.nutrient_tab.innerHTML = `
+  showNutrition(dataArray) {
+    const [formattedData, description, calories] = dataArray;
+
+    console.log(dataArray);
+
+    this.nutrient_tab.innerHTML = `
        <div class="nutrient-container">
 
-       <h4 class="nutrient-header" id="nutrient-header"> ${dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].lowercaseDescription} : <span id="serving-value">${state.serving}</span>g Serving<br>
+       <h4 class="nutrient-header" id="nutrient-header"> ${description}
        </h4>
        <div class="nutrient-row">
          <div class="nutrient-col">
-           <table class="nutrient-table">
+           <table class="nutrient-table"> <tbody class="nutrient-body">
            <tr>
               <th class = "nutrient-table-header">Macronutrients: </th>
            </tr>
-           ${dataControl.majorDataTable}
+           ${formattedData.majorDataTable} </tbody >
            </table>
            <hr class="nutrient-total-line">
-           <table class="nutrient-table">
+           <table class="nutrient-table"> <tbody class="nutrient-body">
            <tr class = "nutrient-table-row"> 
              <td>calories:</td>
-             <td class="nutrient-table-units"> ${dataControl.appData.nutrients.energy.weight} </td>
-           </tr>
+             <td class="nutrient-table-units"> ${calories} </td>
+           </tr></tbody>
            </table>
          </div>
          <div class="nutrient-col">
-         <table class="nutrient-table">
+         <table class="nutrient-table"> <tbody class="nutrient-body">
            <tr>
              <th class = "nutrient-table-header">Minerals: </th>
            </tr>
-           ${dataControl.mineralDataTable}
+           ${formattedData.mineralDataTable} </tbody>
            </table>
          </div>
          <div class="nutrient-col">
-           <table class="nutrient-table">
+           <table class="nutrient-table"> <tbody class="nutrient-body">
              <tr>
                <th class = "nutrient-table-header">Vitamins: </th>
              </tr>
-             ${dataControl.vitaminDataTable}
+             ${formattedData.vitaminDataTable} </tbody>
            </table>
          </div>
          <div class="nutrient-frame">
@@ -157,27 +74,27 @@ class UI {
        <!-- fats/sugar breakdown; optional -->
        <div class="nutrient-row nutrient-row-extended invisible">
          <div class="nutrient-col nutrient-row-extended invisible">
-           <table class="nutrient-table">
+           <table class="nutrient-table"> <tbody class="nutrient-body">
              <tr>
                <th class = "nutrient-table-header">Fatty Acids: </th>
              </tr>
-             ${dataControl.fatBreakdownTable}
+             ${formattedData.fatBreakdownTable} </tbody>
            </table>
          </div>
          <div class="nutrient-col nutrient-row-extended invisible">
-           <table class="nutrient-table">
+           <table class="nutrient-table"> <tbody class="nutrient-body">
            <tr>
               <th class = "nutrient-table-header">Fatty Acids: </th>
            </tr>
-           ${dataControl.fatBreakdown2Table}
+           ${formattedData.fatBreakdown2Table} </tbody>
            </table>
          </div>
          <div class="nutrient-col nutrient-row-extended invisible">
-           <table class="nutrient-table">
+           <table class="nutrient-table"> <tbody class="nutrient-body">
              <tr>
               <th class = "nutrient-table-header">Amino Acids: </th>
              </tr>
-             ${dataControl.aminoAcidDataTable}
+             ${formattedData.aminoAcidDataTable} </tbody>
            </table>
          </div>
        </div>
@@ -187,83 +104,81 @@ class UI {
      <p class="nutrient-caption nutrient-row-extended invisible">* PUFA 18x3 indicates fatty acid with 18 saturated carbons and 3 unsaturated carbons</p>
  `;
 
- // create control which reveals and hides fatty acid breakdown
- let extend = document.querySelector(".nutrient-frame");
+    // create control which reveals and hides fatty acid breakdown
+    let extend = document.querySelector(".nutrient-frame");
 
- extend.addEventListener("click", function()
- {
-   let items = document.querySelectorAll(".nutrient-row-extended");
+    extend.addEventListener("click", function () {
+      let items = document.querySelectorAll(".nutrient-row-extended");
 
-   if(items[0].classList.contains("invisible")) {
-     for (let i = 0;i<items.length;i++) {
-       items[i].classList.remove("invisible");
-       items[i].classList.add("visible")
-     }
-   } else {
-     for (let i = 0;i<items.length;i++) {
-       items[i].classList.remove("visible");
-       items[i].classList.add("invisible")
-     }
-   }
- })
+      if (items[0].classList.contains("invisible")) {
+        for (let i = 0; i < items.length; i++) {
+          items[i].classList.remove("invisible");
+          items[i].classList.add("visible");
+        }
+      } else {
+        for (let i = 0; i < items.length; i++) {
+          items[i].classList.remove("visible");
+          items[i].classList.add("invisible");
+        }
+      }
+    });
   }
 
-  showPieQueue() {
-    if (compareControl.compareLength == 0) {
-      return
+  showPieQueue(pie) {
+    if (compareData.cache.all.length == 0) {
+      return;
     }
-
 
     this.pieQueue.innerHTML = `
 
-      ${compareControl.pieQueue}
+      ${pie}
 
     `;
   }
 
-  showTitles() {
-    if (compareControl.compareLength == 0) {
-      return
+  showTitles(title) {
+    if (compareData.cache.all.length == 0) {
+      return;
     }
-
 
     this.titleQueue.innerHTML = `
 
-      ${compareControl.titlesQueue}
+      ${title}
 
     `;
   }
 
-  showRemove() {
-    if (compareControl.compareLength == 0) {
-      return
+  showRemove(remove) {
+    if (compareData.cache.all.length == 0) {
+      return;
     }
 
     this.removeQueue.innerHTML = `
-    ${compareControl.removeQueue}`;
+    ${remove}`;
   }
 
-  showTable() {
-    if (compareControl.compareLength == 0) {
-      return
+  showTable(table) {
+    if (compareData.cache.all.length == 0) {
+      return;
     }
 
     this.compare_tab.innerHTML = `
 
-      ${compareControl.compareTable}
+      ${table}
 
     `;
   }
 
-  showCompare() {
-    this.showTable();
+  showCompare(queues) {
+    const [pie, title, table, remove] = queues;
 
-    this.showPieQueue();
+    this.showTable(table);
 
-    this.showTitles();
+    this.showPieQueue(pie);
 
-    this.showRemove();
+    this.showTitles(title);
 
+    this.showRemove(remove);
   }
 
   clearCompare() {
@@ -274,11 +189,8 @@ class UI {
   }
 
   // change user input text to similar search term
-  showNewUserText() {
-      let targ = document.getElementById("searchUser");
-      targ.value = dataControl.appData.cache.all[dataControl.appData.cache.all.length-1].lowercaseDescription;
+  showNewUserText(description) {
+    let targ = document.getElementById("searchUser");
+    targ.value = description;
   }
-
-
 }
-

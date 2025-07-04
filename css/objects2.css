@@ -16,7 +16,6 @@
 
 */
 
-
 /* Nutrient Display */
 
 .nutrient-row {
@@ -34,9 +33,9 @@
   color: blanchedalmond;
   padding: 0.45em;
   margin: 1px;
-  min-width: 10.4em;
+  min-width: 184px;
   max-width: 12em;
-  width:auto;
+  width: auto;
   height: 20em;
   box-shadow: 1px 2px 2px black;
   overflow: auto;
@@ -44,10 +43,10 @@
 }
 
 .nutrient-frame {
-  width:auto;
-  color:blanchedalmond;
+  width: auto;
+  color: blanchedalmond;
   background-color: rgb(24, 20, 20);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   border: 1px solid black;
   padding: 0.6em;
   margin: 1px;
@@ -57,299 +56,296 @@
 }
 
 .nutrient-frame-plus {
-    margin-top: 9em;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 9em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .nutrient-table {
-    width: 100%;
-    border-collapse: collapse;
-    cursor: context-menu;
+  width: 100%;
+  border-collapse: collapse;
+  cursor: context-menu;
 }
 
 .nutrient-table-header {
-    text-align: left;
+  text-align: left;
 }
 
 .nutrient-table-row:hover {
-    background-color: rgba(127, 255, 212, 0.308);
+  background-color: rgba(127, 255, 212, 0.308);
 }
 
 .nutrient-table-units {
-    text-align: right;
-    width: 4em;
+  text-align: right;
+  width: 9em;
 }
 .nutrient-table-label {
-    width: 6em;
+  width: 6em;
+}
+
+.nutrient-body {
 }
 
 .nutrient-caption {
-    color: blanchedalmond;
+  color: blanchedalmond;
 }
 
 .nutrient-row-extended {
-    margin-top: 0.8em;
+  margin-top: 0.8em;
 }
-
 
 /* Related Search List */
 
 #related {
-    cursor:pointer;
-    color: blanchedalmond;
-    text-decoration: dashed;
-    list-style-type: none;
-    padding:0;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
+  cursor: pointer;
+  color: blanchedalmond;
+  text-decoration: dashed;
+  list-style-type: none;
+  padding: 0;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
 }
 
 .related__entry {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 4px;
-    align-items: center;
-    margin: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 4px;
+  align-items: center;
+  margin: 20px;
 }
 
 .related__title {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .relatedList {
-    text-transform: capitalize;
-    font-size: 1em;
+  text-transform: capitalize;
+  font-size: 1em;
 }
 
 /* Input Bar */
 .input {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 /* Search Input Field */
 
 .search-control {
-    width: 25em;
-    color:blanchedalmond;
-    padding:6px;
-    font-size: 1.2em;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 0.5px solid rgb(177, 175, 175);
-    border-radius: 3px;
-    box-shadow: rgb(17, 17, 175);
-    background-color: rgb(37,37,37);
-    border-style: groove;
+  width: 25em;
+  color: blanchedalmond;
+  padding: 6px;
+  font-size: 1.2em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border: 0.5px solid rgb(177, 175, 175);
+  border-radius: 3px;
+  box-shadow: rgb(17, 17, 175);
+  background-color: rgb(37, 37, 37);
+  border-style: groove;
 }
 
 /* Serving Control Input Field */
 
 .serving-control {
-    display: block; 
-    text-align: left;
-    min-width: 60px;
-    color:blanchedalmond;
-    padding:6px;
-    font-size: 1.2em;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 0.5px solid rgb(177, 175, 175);
-    border-radius: 3px;
-    box-shadow: rgb(17, 17, 175);
+  display: block;
+  text-align: left;
+  min-width: 60px;
+  color: blanchedalmond;
+  padding: 6px;
+  font-size: 1.2em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border: 0.5px solid rgb(177, 175, 175);
+  border-radius: 3px;
+  box-shadow: rgb(17, 17, 175);
 }
 
 .serving-choices {
-    text-decoration: none;
-    list-style-type: none;
-    padding-inline-start: 0px;
-    margin:0px;
+  text-decoration: none;
+  list-style-type: none;
+  padding-inline-start: 0px;
+  margin: 0px;
 }
 
 .serving-choice {
-    position: relative;
-    display: none;
+  position: relative;
+  display: none;
 }
 
 .current-choice {
-    display: inline;
+  display: inline;
 }
-
 
 /* Compare Table */
 
 .remove-btn {
-    background-color: blanchedalmond;
-    color: black;
-    border-radius: 100px;
-    padding: 0.8rem;
-    text-align: center;
-    position: absolute;
-    bottom:0;
-    left: 0;
-    right: 0;
-    margin: 1rem;
+  background-color: blanchedalmond;
+  color: black;
+  border-radius: 100px;
+  padding: 0.8rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 1rem;
 }
 
 .btn {
-    background-color: blanchedalmond;
-    color: black;
-    border-radius: 100px;
-    text-align: center;
-    display: inline-block;
-    margin: 0;
+  background-color: blanchedalmond;
+  color: black;
+  border-radius: 100px;
+  text-align: center;
+  display: inline-block;
+  margin: 0;
 }
 
 .compare__btn:hover {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .compare__btn:active {
-    transform: translateY(-1px);
+  transform: translateY(-1px);
 }
 
 .compare__btn {
-    padding: 4px 1em;
-    font-size: 1.2rem;
+  padding: 4px 1em;
+  font-size: 1.2rem;
 }
 
 .col-title {
-    color: blanchedalmond;
-    font-size: 1.2rem;
-    text-transform: capitalize;
-    overflow: hidden;
-    width: 11em;
+  color: blanchedalmond;
+  font-size: 1.2rem;
+  text-transform: capitalize;
+  overflow: hidden;
+  width: 11em;
 }
 
 .compare-col {
-    background-color: rgb(24, 20, 20);
-    border: 1px black solid;
-    color: blanchedalmond;
-    padding: 0.45em;
-    margin: 1px;
-    width: 11em;
-    height: 20em;
-    box-shadow: 1px 2px 2px black;
-    overflow: auto;
-    position: relative;
-  }
+  background-color: rgb(24, 20, 20);
+  border: 1px black solid;
+  color: blanchedalmond;
+  padding: 0.45em;
+  margin: 1px;
+  width: 11em;
+  height: 20em;
+  box-shadow: 1px 2px 2px black;
+  overflow: auto;
+  position: relative;
+}
 
 .compare__table {
-    /* background-color: rgba(87, 88, 88, 0.671); */
-    border-collapse: collapse;
-    font-size: 1.45rem;
-    color: blanchedalmond;
-    overflow-x: none;
-    width: auto;
+  /* background-color: rgba(87, 88, 88, 0.671); */
+  border-collapse: collapse;
+  font-size: 1.45rem;
+  color: blanchedalmond;
+  overflow-x: none;
+  width: auto;
 }
 
 .compareTable__element {
-    min-width: 150px;
-    padding: 0;
-    margin: 0;
-    border-bottom: 1.2px solid rgba(255, 235, 205, 0.397);
-    text-align:center;
+  min-width: 150px;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1.2px solid rgba(255, 235, 205, 0.397);
+  text-align: center;
 }
 
 .compareTable__title {
-    min-width: 100px;
-    border-bottom: 1.2px solid rgba(255, 235, 205, 0.39);
-
+  min-width: 100px;
+  border-bottom: 1.2px solid rgba(255, 235, 205, 0.39);
 }
 
 .pie-queue {
-    margin-left: 100px;
-    padding-bottom: 1em;
-
+  margin-left: 100px;
+  padding-bottom: 1em;
 }
 
 .pie-container {
-    max-width:150px;
-    display: inline-block;
+  max-width: 150px;
+  display: inline-block;
 }
 
 .pie {
-    transform: scale(0.86);
-    color: rgb(253, 6, 6);
+  transform: scale(0.86);
+  color: rgb(253, 6, 6);
 }
 
 .compare-container {
-    overflow-x: auto;
-    display: table;
-    margin-bottom: 2rem;
+  overflow-x: auto;
+  display: table;
+  margin-bottom: 2rem;
 }
 
 .title__table {
-    border-collapse: collapse;
-    text-align: center;
-    font-size: 1rem;
-    color: blanchedalmond;
-    width: auto;
-    word-wrap: wrap;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1rem;
+  color: blanchedalmond;
+  width: auto;
+  word-wrap: wrap;
 }
 
 .titleTable__title {
-    min-width: 100px;
-    padding-bottom: 5em;
+  min-width: 100px;
+  padding-bottom: 5em;
 }
 
 .square {
-    height: 1rem;
-    width: 1rem;
-    display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
 }
 
 .square-Protein {
-    background-color: rgba(253, 6, 6,0.8) ;
+  background-color: rgba(253, 6, 6, 0.8);
 }
 
 .square-Fat {
-    background-color: rgba(255,255,33,1) ;
+  background-color: rgba(255, 255, 33, 1);
 }
 
 .square-Water {
-    background-color: rgba(33,33,235,0.5) ;
+  background-color: rgba(33, 33, 235, 0.5);
 }
 
 .square-Carbs {
-    background-color: rgba(255, 255, 255,1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .titleTable__element {
-    min-width: 150px;
-    width: 150px;
-    padding: 0;
-    margin: 0;
+  min-width: 150px;
+  width: 150px;
+  padding: 0;
+  margin: 0;
 }
 
 .remove__btn {
-    padding: 4px 1em;
-    margin: 1rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+  padding: 4px 1em;
+  margin: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .remove__container {
-    display: inline;
-    width: 150px;
-    position: relative;
-
+  display: inline;
+  width: 150px;
+  position: relative;
 }
 
 .remove__container::after {
-    content: "";
-    clear:both;
-    display: table;
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .remove-queue {
-    margin-left: 100px;
-    display: flex;
-    margin-top: 1rem;
-    
+  margin-left: 100px;
+  display: flex;
+  margin-top: 1rem;
 }
