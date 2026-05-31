@@ -61,8 +61,8 @@ class HTMLController {
               .split("_")
               .join(" ")}:</td>
             <td class="nutrient-table-units"> ${nutrient.weight} ${
-          nutrient.units
-        } </td>
+              nutrient.units
+            } </td>
             <td class="invisible">${nutrient.rdvPercent} % </td>
           </tr>
         `;
@@ -166,8 +166,8 @@ class HTMLController {
             <tr>
               <td> ${nutrientName.split("_").join(" ")}:</td>
               <td class="nutrient-value-units">${nutrient.weight} ${
-            nutrient.units
-          } </td>
+                nutrient.units
+              } </td>
               <td class="nutrient-daily-value">${nutrient.rdvPercent} % </td>
             </tr>
           `;
@@ -204,7 +204,7 @@ class DataController {
     comp.forEach((el) => {
       el.addEventListener(
         "click",
-        compareControl.compareSearchSubmit.bind(this)
+        compareControl.compareSearchSubmit.bind(this),
       );
     });
   }
@@ -303,6 +303,7 @@ class DataController {
 
     ui.showRelatedSearches(relatedData);
 
+    this.createClickEventListenerRelated();
     this.createClickEventListenerCompare();
     this.createClickEventListenerRemove();
   }
@@ -327,7 +328,7 @@ class CompareController {
     compareData.formatUnits();
 
     compareData.addItem(
-      compareData.cache.all[compareData.cache.all.length - 1]
+      compareData.cache.all[compareData.cache.all.length - 1],
     );
 
     compareData.processQueue();

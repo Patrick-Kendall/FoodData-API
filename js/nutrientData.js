@@ -329,7 +329,7 @@ class nutrientData {
       case 1258:
         this.fats.fatTotals.saturated_Fat.fill(
           nutrient.value,
-          nutrient.unitName
+          nutrient.unitName,
         );
         break;
 
@@ -432,7 +432,7 @@ class nutrientData {
       case 1292:
         this.fats.fatTotals.mono_unsaturated_Fat.fill(
           nutrient.value,
-          nutrient.unitName
+          nutrient.unitName,
         );
         break;
 
@@ -440,7 +440,7 @@ class nutrientData {
       case 1293:
         this.fats.fatTotals.poly_unsaturated_Fat.fill(
           nutrient.value,
-          nutrient.unitName
+          nutrient.unitName,
         );
         break;
 
@@ -839,18 +839,18 @@ class AppData {
 
   generateDataTables() {
     this.formattedData.majorDataTable = this.HTMLControl.genDecodeHTML_tr(
-      this.nutrients.major
+      this.nutrients.major,
     );
     this.formattedData.mineralDataTable = this.HTMLControl.genDecodeHTML_tr(
-      this.nutrients.minerals
+      this.nutrients.minerals,
     );
     this.formattedData.vitaminDataTable = this.HTMLControl.genDecodeHTML_tr(
-      this.nutrients.vitamins
+      this.nutrients.vitamins,
     );
 
     // 2nd row of columns
     this.formattedData.aminoAcidDataTable = this.HTMLControl.genDecodeHTML_tr(
-      this.nutrients.aminoAcids
+      this.nutrients.aminoAcids,
     );
     this.formattedData.fatBreakdownTable =
       this.HTMLControl.genDecodeHTML_tr(this.nutrients.fats.sat) + "<tr> </tr>";
@@ -863,7 +863,7 @@ class AppData {
   // generate list of brands containing one of the identical keywords as the current search
   processRelatedBrands() {
     const array = this.extractTitle(
-      this.cache.full[this.cache.full.length - 1].foods
+      this.cache.full[this.cache.full.length - 1].foods,
     );
 
     const uniqueArray = array.filter(onlyUnique);
@@ -923,6 +923,12 @@ class CompareData extends AppData {
   createCompare() {
     this.createTable();
 
+    // if no compare items, delete table
+    if (this.queue.length == 0) {
+      this.compareTable = "";
+    } else {
+    }
+
     this.createPieQueue();
 
     this.createTitles();
@@ -937,25 +943,23 @@ class CompareData extends AppData {
     result += this.HTMLControl.genDecodeHTML_row2(
       "compare",
       "Protein",
-      this.proArray
+      this.proArray,
     );
     result += this.HTMLControl.genDecodeHTML_row2(
       "compare",
       "Fat",
-      this.fatArray
+      this.fatArray,
     );
     result += this.HTMLControl.genDecodeHTML_row2(
       "compare",
       "Carbs",
-      this.carbArray
+      this.carbArray,
     );
-    console.log(this.waterArray);
-    console.log(this.cache);
-    console.log(this.queue);
+
     result += this.HTMLControl.genDecodeHTML_row2(
       "compare",
       "Water",
-      this.waterArray
+      this.waterArray,
     );
 
     result += `</table>`;

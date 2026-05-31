@@ -257,6 +257,7 @@
 .pie-queue {
   margin-left: 100px;
   padding-bottom: 1em;
+  display: table;
 }
 
 .pie-container {
