@@ -1,0 +1,19 @@
+IDEAS:
+
+if totalHits = zero in response, then clear and exit program 
+
+enable back functionality
+
+
+BUGS-ISH:
+
+as of 29MAR22 compare data is tied to nutrient-tab current data
+
+
+BUG 29MAR22: related search creates more fetch requests as one clicks the related function more (i.e. first related search = 1 fetch; second related search = 2 fetch; third related search = 3 fetch; 4th = 9; 5th = ~19 )
+ more info: createSimilarSearch() creates event listener which calls showRelatedSearch(); showRelatedSearch() calls createSimilarSearch
+ immediate solution: remove "create" methods from showRelatedSearches()
+
+
+BUG 29MAR22: status 500 from server
+ potential cause: too long a query string
